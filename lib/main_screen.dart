@@ -1,4 +1,5 @@
 import 'package:day/main_provider.dart';
+import 'package:day/widgets/day_switch_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,63 +13,129 @@ class MainScreen extends StatelessWidget {
       backgroundColor: Colors.blueGrey,
         body: Consumer<MainProvider>(
           builder: (context, data, _){
-            return Center(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                padding: const EdgeInsets.all(1),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey.withOpacity(0.9),
-                      const Color(0xffdcdcdc).withOpacity(0.7)
-                    ],
-                    begin: data.day ? Alignment.centerRight : Alignment.centerLeft,
-                    end: data.day ? Alignment.centerLeft : Alignment.centerRight
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(60)),
-                ),
-                child: AnimatedContainer(
-                  width: size.width * 0.9,
-                  height: 120,
+            return SafeArea(
+              child: SizedBox(
+                width: size.width,
+                height: size.height,
+                child: Stack(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(60)),
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/${data.day ? 'day' : 'night'}.png'),
-                        fit: BoxFit.fill
-                    ),
-                  ),
-                  duration: const Duration(milliseconds: 500),
-                  child: AnimatedAlign(
-                    duration: const Duration(milliseconds: 500),
-                    alignment: data.day ? Alignment.centerLeft : Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () => data.switchDay(),
+                  children: [
+                    Positioned(
+                      bottom: 0,
                       child: Container(
-                        width: 80,
-                        height: 80,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(60)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              spreadRadius: 2,
-                              blurRadius: 1
-                            )
-                          ],
+                        height: 20,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  offset: Offset(0, -4)
+                              )
+                            ]
                         ),
-                          child: AnimatedCrossFade(
-                            firstChild: Image.asset('assets/images/sun.png'),
-                            secondChild: Image.asset('assets/images/moon.png'),
-                            crossFadeState: data.day ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 500),
-
-                          ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      top: size.height * 0.66 + 125 ,
+                      child: Container(
+                        height: size.height * 0.06,
+                        width: size.width * 0.8,
+                        decoration: const BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+
+                              )
+                            ]
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: size.height * 0.4 + 120,
+                      child: Container(
+                        height: size.height * 0.2,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  offset: Offset(0, 4)
+                              )
+                            ]
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: size.height * 0.2 + 130,
+                      child: Container(
+                        height: size.height * 0.2,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  offset: Offset(0, 4)
+                              )
+                            ]
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 130,
+                      child: Container(
+                        height: size.height * 0.2,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  offset: Offset(0, 4)
+                              )
+                            ]
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      child: Container(
+                        width: size.width,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  offset: Offset(0, 4)
+                              )
+                            ]
+                        ),
+                        child: const DaySwitchWidget(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -77,3 +144,5 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
+
