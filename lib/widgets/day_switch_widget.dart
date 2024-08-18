@@ -2,6 +2,8 @@ import 'package:day/main_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
+
 class DaySwitchWidget extends StatelessWidget {
   const DaySwitchWidget({
     super.key,
@@ -53,7 +55,7 @@ class DaySwitchWidget extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(60)),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: kBlack.withOpacity(0.1),
                             spreadRadius: 2,
                             blurRadius: 1
                         )

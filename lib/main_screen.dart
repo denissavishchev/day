@@ -1,7 +1,9 @@
 import 'package:day/main_provider.dart';
 import 'package:day/widgets/day_switch_widget.dart';
+import 'package:day/widgets/task_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'constants.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -10,7 +12,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: kBlack,
         body: Consumer<MainProvider>(
           builder: (context, data, _){
             return SafeArea(
@@ -25,32 +27,39 @@ class MainScreen extends StatelessWidget {
                       child: Container(
                         height: 20,
                         width: size.width,
-                        decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                                colors: [
+                                  kBlue,
+                                  kGrey
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight
+                            ),
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, -4)
+                                  color: kRed.withOpacity(0.4),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, -1)
                               )
                             ]
                         ),
                       ),
                     ),
                     Positioned(
-                      top: size.height * 0.66 + 125 ,
+                      top: size.height * 0.66 + 90 ,
                       child: Container(
-                        height: size.height * 0.06,
+                        height: size.height * 0.1,
                         width: size.width * 0.8,
-                        decoration: const BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                        decoration: BoxDecoration(
+                            color: kRed,
+                            borderRadius: const BorderRadius.all(Radius.circular(18)),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 4,
+                                  color: kRed.withOpacity(0.6),
+                                  blurRadius: 8,
                                   spreadRadius: 4,
 
                               )
@@ -58,77 +67,29 @@ class MainScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: size.height * 0.4 + 120,
-                      child: Container(
-                        height: size.height * 0.2,
-                        width: size.width,
-                        decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, 4)
-                              )
-                            ]
-                        ),
-                      ),
+                    TaskContainerWidget(
+                        position: size.height * 0.4 + 80
                     ),
-                    Positioned(
-                      top: size.height * 0.2 + 130,
-                      child: Container(
-                        height: size.height * 0.2,
-                        width: size.width,
-                        decoration: const BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, 4)
-                              )
-                            ]
-                        ),
-                      ),
+                    TaskContainerWidget(
+                        position: size.height * 0.2 + 100
                     ),
-                    Positioned(
-                      top: 130,
-                      child: Container(
-                        height: size.height * 0.2,
-                        width: size.width,
-                        decoration: const BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, 4)
-                              )
-                            ]
-                        ),
-                      ),
+                    const TaskContainerWidget(
+                      position: 120,
                     ),
                     Positioned(
                       top: 0,
                       child: Container(
                         width: size.width,
                         alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                        decoration: BoxDecoration(
+                            color: kBlack,
+                            borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 4,
-                                  spreadRadius: 4,
-                                  offset: Offset(0, 4)
+                                  color: kBlack.withOpacity(0.6),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 1)
                               )
                             ]
                         ),
@@ -144,5 +105,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
