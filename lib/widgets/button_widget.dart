@@ -23,7 +23,14 @@ class ButtonWidget extends StatelessWidget {
         height: size.height * 0.14,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: kBlack),
+          border: Border.all(width: 1, color: kBlue),
+          boxShadow: [
+            BoxShadow(
+              color: kBlue.withOpacity(0.5),
+              spreadRadius: 2.0,
+              blurRadius: 2.0,
+            ),
+          ],
             gradient: const LinearGradient(
                 colors: [
                   kGrey,
@@ -32,7 +39,7 @@ class ButtonWidget extends StatelessWidget {
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(18))
+            borderRadius: const BorderRadius.all(Radius.circular(18)),
         ),
         child: Container(
           width: size.height * 0.06,

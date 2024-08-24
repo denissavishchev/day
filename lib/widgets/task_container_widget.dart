@@ -72,7 +72,8 @@ class TaskContainerWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Play guitar'),
+                          Text('Play guitar',
+                            style: TextStyle(color: kRed, fontSize: 18, fontWeight: FontWeight.bold),),
                         ],
                       ),
                     ),
@@ -81,6 +82,7 @@ class TaskContainerWidget extends StatelessWidget {
                     height: double.infinity,
                     width: size.width * 0.2,
                     margin: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.only(top: 8),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       border: Border.all(color: kBlue.withOpacity(0.7), width: 1),
