@@ -72,7 +72,7 @@ class TaskContainerWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Play guitar2'),
+                          Text('Play guitar'),
                         ],
                       ),
                     ),
