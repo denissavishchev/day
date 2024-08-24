@@ -1,4 +1,5 @@
 import 'package:day/main_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
@@ -10,11 +11,17 @@ class TaskContainerWidget extends StatelessWidget {
     required this.position,
     required this.checked,
     required this.index,
+    required this.text,
+    required this.description,
+    required this.image,
   });
 
   final double position;
   final bool checked;
   final int index;
+  final String text;
+  final String description;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +59,12 @@ class TaskContainerWidget extends StatelessWidget {
                     width: size.width * 0.25,
                     clipBehavior: Clip.hardEdge,
                     margin: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/1.jpg'),fit: BoxFit.cover,
+                            image: AssetImage('assets/images/$image.jpg'),fit: BoxFit.cover,
                         ),
-                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                        boxShadow: [
+                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
+                        boxShadow: const [
                           BoxShadow(
                               color: kBlue,
                               spreadRadius: 1,
@@ -66,43 +73,58 @@ class TaskContainerWidget extends StatelessWidget {
                     ),
                     child: Image.asset('assets/images/shadow.png', fit: BoxFit.fill,),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 28),
+                      padding: const EdgeInsets.only(top: 28, bottom: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Play guitar',
-                            style: TextStyle(color: kRed, fontSize: 18, fontWeight: FontWeight.bold),),
+                          Text(text,
+                            style: const TextStyle(color: kRed, fontSize: 18, fontWeight: FontWeight.bold),),
+                          const SizedBox(height: 4,),
+                          Center(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  width: size.width * 0.4,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.elliptical(150, 10)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: kBlack.withOpacity(0.5),
+                                        blurRadius: 20,
+                                        spreadRadius: 1.5,
+                                        offset: const Offset(0, 10)
+                                      )
+                                    ]
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 0.45,
+                                  height: 1,
+                                  decoration: const BoxDecoration(
+                                      color: kGrey,
+                                      borderRadius: BorderRadius.all(Radius.elliptical(150, 10)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Text(description,
+                                style: TextStyle(color: kRed.withOpacity(0.8), fontSize: 16, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    height: double.infinity,
-                    width: size.width * 0.2,
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.only(top: 8),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: kBlue.withOpacity(0.7), width: 1),
-                      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: kBlue.withOpacity(0.7),
-                        ),
-                        const BoxShadow(
-                          color: kGrey,
-                          spreadRadius: -4.0,
-                          blurRadius: 4.0,
-                        ),
-                      ],
-                    ),
-                    child: ButtonWidget(
-                      icon: Icons.check_circle,
-                      checked: checked,
-                      onTap: () => data.switchChecked(index)
-                    ),
+                  ButtonWidget(
+                    checked: checked,
+                    onTap: () => data.switchChecked(index)
                   ),
                 ],
               ),
