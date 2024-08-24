@@ -36,7 +36,8 @@ class MainScreen extends StatelessWidget {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight
                             ),
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(18)),
                             boxShadow: [
                               BoxShadow(
                                   color: kRed.withOpacity(0.4),
@@ -55,26 +56,32 @@ class MainScreen extends StatelessWidget {
                         width: size.width * 0.8,
                         decoration: BoxDecoration(
                             color: kRed,
-                            borderRadius: const BorderRadius.all(Radius.circular(18)),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(18)),
                             boxShadow: [
                               BoxShadow(
                                   color: kRed.withOpacity(0.6),
                                   blurRadius: 8,
                                   spreadRadius: 4,
-
                               )
                             ]
                         ),
                       ),
                     ),
                     TaskContainerWidget(
-                        position: size.height * 0.4 + 80
+                      position: size.height * 0.4 + 80,
+                      checked: data.checkedOne,
+                      index: 1,
                     ),
                     TaskContainerWidget(
-                        position: size.height * 0.2 + 100
+                      position: size.height * 0.2 + 100,
+                      checked: data.checkedTwo,
+                      index: 2,
                     ),
-                    const TaskContainerWidget(
+                    TaskContainerWidget(
                       position: 120,
+                      checked: data.checkedThree,
+                      index: 3,
                     ),
                     Positioned(
                       top: 0,
