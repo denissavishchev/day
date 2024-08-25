@@ -11,6 +11,8 @@ class MainProvider with ChangeNotifier {
   String startTime = '';
   String startState = '';
   String dayDuration = '';
+  String endTime = '';
+  String previousDayDuration = '';
 
   String formatDuration(Duration duration) {
     String twoDigits(int n) {
@@ -45,11 +47,17 @@ class MainProvider with ChangeNotifier {
 
   void switchDay() async{
     day = !day;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     if(day){
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('day', true);
       await prefs.setString('startTime', DateTime.now().toString());
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
+    }else{
+      await prefs.setString('endTime', DateTime.now().toString());
+      endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
+      await prefs.setString('previousDayDuration', dayDuration);
+      previousDayDuration = dayDuration;
+      await prefs.setBool('day', false);
     }
     notifyListeners();
   }

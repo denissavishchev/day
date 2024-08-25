@@ -75,8 +75,10 @@ class _DaySwitchWidgetState extends State<DaySwitchWidget> {
                         opacity: data.day ? 0 : 1,
                         duration: Duration(milliseconds: data.day ? 200 : 500),
                         curve: Curves.easeInCubic,
-                        child: const Text('Duration of the last day: 12:37',
-                          style: TextStyle(color: kRed, fontWeight: FontWeight.bold),))),
+                        child: Text(data.endTime == ''
+                            ? ''
+                            : 'The previous day lasted ${data.previousDayDuration}\nand ended at ${data.endTime}',
+                          style: const TextStyle(color: kRed, fontWeight: FontWeight.bold),))),
                   Positioned(
                     bottom: 14,
                     left: size.width * 0.1,
@@ -94,7 +96,7 @@ class _DaySwitchWidgetState extends State<DaySwitchWidget> {
                           opacity: data.day ? 1 : 0,
                           duration: Duration(milliseconds: data.day ? 600 : 200),
                           curve: Curves.easeInCubic,
-                          child: Text('Your day started at: ${data.startTime}',
+                          child: Text('Your day started at ${data.startTime}',
                             style: const TextStyle(color: kBlue, fontWeight: FontWeight.bold),))),
                   Positioned(
                       bottom: 14,
