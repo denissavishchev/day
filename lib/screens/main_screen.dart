@@ -1,9 +1,11 @@
 import 'package:day/main_provider.dart';
+import 'package:day/screens/tasks_screen.dart';
+import 'package:day/widgets/button_widget.dart';
 import 'package:day/widgets/day_switch_widget.dart';
 import 'package:day/widgets/task_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -54,6 +56,7 @@ class MainScreen extends StatelessWidget {
                       child: Container(
                         height: size.height * 0.1,
                         width: size.width * 0.8,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: kRed,
                             borderRadius: const BorderRadius.all(
@@ -65,6 +68,12 @@ class MainScreen extends StatelessWidget {
                                   spreadRadius: 4,
                               )
                             ]
+                        ),
+                        child: ButtonWidget(
+                          onTap: () => Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) =>
+                              const TasksScreens())),
+                          icon: Icons.playlist_add_check_outlined,
                         ),
                       ),
                     ),
@@ -121,6 +130,8 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

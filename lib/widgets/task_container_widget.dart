@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import 'button_widget.dart';
+import 'switch_button_widget.dart';
 
 class TaskContainerWidget extends StatelessWidget {
   const TaskContainerWidget({
@@ -122,7 +122,7 @@ class TaskContainerWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ButtonWidget(
+                  SwitchButtonWidget(
                     checked: checked,
                     onTap: () => data.switchChecked(index)
                   ),

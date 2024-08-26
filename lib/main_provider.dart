@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainProvider with ChangeNotifier {
+
+  final taskTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
 
   bool day = true;
   bool checkedOne = false;
@@ -13,6 +19,22 @@ class MainProvider with ChangeNotifier {
   String dayDuration = '';
   String endTime = '';
   String previousDayDuration = '';
+
+  String fileName = '';
+  late XFile? file;
+  String base64String = '';
+
+  Future pickAnImage()async{
+    ImagePicker image = ImagePicker();
+    file = await image.pickImage(source: ImageSource.camera,
+        maxHeight: 1000.0,
+        maxWidth: 1000.0);
+    if(file == null) return;
+    List<int> imageBytes = File(file!.path).readAsBytesSync();
+    base64String = base64Encode(imageBytes);
+    fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    notifyListeners();
+  }
 
   String formatDuration(Duration duration) {
     String twoDigits(int n) {
