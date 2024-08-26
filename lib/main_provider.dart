@@ -78,7 +78,7 @@ class MainProvider with ChangeNotifier {
       await prefs.setString('endTime', DateTime.now().toString());
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
       await prefs.setString('previousDayDuration', dayDuration);
-      previousDayDuration = prefs.getString(dayDuration).toString();
+      previousDayDuration = prefs.getString('previousDayDuration').toString();
       await prefs.setBool('day', false);
     }
     notifyListeners();
