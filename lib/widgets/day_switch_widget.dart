@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:day/main_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +106,7 @@ class _DaySwitchWidgetState extends State<DaySwitchWidget> {
                           duration: Duration(milliseconds: data.day ? 600 : 200),
                           curve: Curves.easeInCubic,
                           child: Text('Day duration: ${data.dayDuration}',
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
+                            style: const TextStyle(color: kBlack, fontWeight: FontWeight.bold),))),
                   AnimatedAlign(
                     duration: const Duration(milliseconds: 500),
                     alignment: data.day ? Alignment.centerLeft : Alignment.centerRight,

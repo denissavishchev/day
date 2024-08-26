@@ -32,7 +32,7 @@ class TaskContainerWidget extends StatelessWidget {
             top: position,
             child: Container(
               height: size.height * 0.2,
-              width: size.width,
+              width: size.width * 0.95,
               decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
@@ -45,7 +45,7 @@ class TaskContainerWidget extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
                   boxShadow: [
                     BoxShadow(
-                        color: kRed.withOpacity(0.6),
+                        color: kBlack.withOpacity(0.6),
                         blurRadius: 8,
                         spreadRadius: 2,
                         offset: const Offset(0, 1)
@@ -80,7 +80,7 @@ class TaskContainerWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(text,
-                            style: const TextStyle(color: kRed, fontSize: 18, fontWeight: FontWeight.bold),),
+                            style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 4,),
                           Center(
                             child: Stack(
@@ -115,7 +115,7 @@ class TaskContainerWidget extends StatelessWidget {
                           Expanded(
                             child: SingleChildScrollView(
                               child: Text(description,
-                                style: TextStyle(color: kRed.withOpacity(0.8), fontSize: 16, fontWeight: FontWeight.bold),),
+                                style: TextStyle(color: kWhite.withOpacity(0.8), fontSize: 16, fontWeight: FontWeight.bold),),
                             ),
                           ),
                         ],

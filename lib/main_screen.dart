@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
                       bottom: 0,
                       child: Container(
                         height: 20,
-                        width: size.width,
+                        width: size.width * 0.95,
                         decoration: BoxDecoration(
                             gradient: const LinearGradient(
                                 colors: [
@@ -95,7 +95,7 @@ class MainScreen extends StatelessWidget {
                     Positioned(
                       top: 0,
                       child: Container(
-                        width: size.width,
+                        width: size.width * 0.95,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: kBlack,
