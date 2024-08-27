@@ -5,9 +5,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'models/boxes.dart';
+import 'models/tasks_model.dart';
+
 class MainProvider with ChangeNotifier {
 
-  final taskTextController = TextEditingController();
+  final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
 
   bool day = true;
@@ -20,9 +23,22 @@ class MainProvider with ChangeNotifier {
   String endTime = '';
   String previousDayDuration = '';
 
-  String fileName = '';
   late XFile? file;
   String base64String = '';
+
+  Future addTaskBase() async {
+      final tasks = TasksModel()
+        ..name = nameTextController.text
+        ..description = descriptionTextController.text
+        ..photo = base64String
+        ..time = DateTime.now().toString();
+      final box = Boxes.addTaskToBase();
+      box.add(tasks);
+      base64String = '';
+      nameTextController.clear();
+      descriptionTextController.clear();
+    notifyListeners();
+  }
 
   Future pickAnImage()async{
     ImagePicker image = ImagePicker();
@@ -32,7 +48,6 @@ class MainProvider with ChangeNotifier {
     if(file == null) return;
     List<int> imageBytes = File(file!.path).readAsBytesSync();
     base64String = base64Encode(imageBytes);
-    fileName = DateTime.now().millisecondsSinceEpoch.toString();
     notifyListeners();
   }
 

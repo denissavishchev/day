@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'main_provider.dart';
+import 'models/tasks_model.dart';
 import 'screens/main_screen.dart';
 
-void main() {
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(TasksModelAdapter());
+  await Hive.openBox<TasksModel>('tasks');
   runApp(const MyApp());
 }
 
