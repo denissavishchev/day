@@ -1,4 +1,5 @@
 import 'package:day/main_provider.dart';
+import 'package:day/screens/plan_screen.dart';
 import 'package:day/screens/tasks_screen.dart';
 import 'package:day/widgets/button_widget.dart';
 import 'package:day/widgets/day_switch_widget.dart';
@@ -69,11 +70,23 @@ class MainScreen extends StatelessWidget {
                               )
                             ]
                         ),
-                        child: ButtonWidget(
-                          onTap: () => Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) =>
-                              const TasksScreens())),
-                          icon: Icons.playlist_add_check_outlined,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ButtonWidget(
+                              onTap: () => Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                  const TasksScreen())),
+                              icon: Icons.playlist_add_check_outlined,
+                            ),
+                            const SizedBox(width: 12,),
+                            ButtonWidget(
+                              onTap: () => Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                  const PlanScreen())),
+                              icon: Icons.local_play,
+                            ),
+                          ],
                         ),
                       ),
                     ),

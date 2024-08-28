@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'dart:io';
 
-class TasksScreens extends StatelessWidget {
-  const TasksScreens({super.key});
+class TasksScreen extends StatelessWidget {
+  const TasksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
