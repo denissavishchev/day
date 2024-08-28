@@ -78,6 +78,8 @@ class MainProvider with ChangeNotifier {
       notifyListeners();
     }else{
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
+      endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
+      previousDayDuration = prefs.getString('previousDayDuration').toString();
       day = prefs.getBool('day')!;
     }
   }
