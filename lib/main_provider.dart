@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +27,42 @@ class MainProvider with ChangeNotifier {
 
   late XFile? file;
   String base64String = '';
+
+  Box box = Hive.box('plans');
+
+  Future addTaskToPlan(String name, String description, String photo) async{
+    if(box.get('name1') == null){
+      await box.put('name1', name);
+      await box.put('description1', description);
+      await box.put('photo1', photo);
+      await box.put('status1', false);
+      await box.put('deadline1', '');
+    }else if(box.get('name2') == null){
+      await box.put('name2', name);
+      await box.put('description2', description);
+      await box.put('photo2', photo);
+      await box.put('status2', false);
+      await box.put('deadline2', '');
+    }else if(box.get('name3') == null){
+      await box.put('name3', name);
+      await box.put('description3', description);
+      await box.put('photo3', photo);
+      await box.put('status3', false);
+      await box.put('deadline3', '');
+    }else{
+      print('Not Empty');
+    }
+    notifyListeners();
+  }
+
+  Future deleteTaskFromPlan(int index) async{
+    box.delete('name$index');
+    box.delete('description$index');
+    box.delete('photo$index');
+    box.delete('status$index');
+    box.delete('deadline$index');
+    notifyListeners();
+  }
 
   Future addTaskBase() async {
       final tasks = TasksModel()
@@ -68,7 +106,6 @@ class MainProvider with ChangeNotifier {
         ? DateTime.now().difference(DateTime.now())
         : DateTime.now().difference(DateTime.parse(prefs.getString('startTime').toString()));
     dayDuration = formatDuration(duration);
-    notifyListeners();
   }
 
   void initDay() async{

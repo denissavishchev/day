@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:day/main_provider.dart';
 import 'package:day/screens/plan_screen.dart';
 import 'package:day/screens/tasks_screen.dart';
@@ -94,25 +95,31 @@ class MainScreen extends StatelessWidget {
                       position: size.height * 0.4 + 80,
                       checked: data.checkedOne,
                       index: 1,
-                      text: 'Play guitar',
-                      description: 'It\'s like learning sign language, then singing with my fingers.',
-                      image: '1',
+                      text: data.box.get('name3') ?? '',
+                      description: data.box.get('description3') ?? '',
+                      image: data.box.get('photo3') == null
+                          ? const AssetImage('assets/images/2.jpg')
+                          : MemoryImage(base64Decode(data.box.get('photo3')))
                     ),
                     TaskContainerWidget(
                       position: size.height * 0.2 + 100,
                       checked: data.checkedTwo,
                       index: 2,
-                      text: 'Biking around the city',
-                      description: 'Every city is different, but each has its own beauty, and when you’re on your bike you’ll reconnect with that beauty and remember just why it is you live there.',
-                      image: '2',
+                      text: data.box.get('name2') ?? '',
+                      description: data.box.get('description2') ?? '',
+                      image: data.box.get('photo2') == null
+                          ? const AssetImage('assets/images/2.jpg')
+                          : MemoryImage(base64Decode(data.box.get('photo2')))
                     ),
                     TaskContainerWidget(
                       position: 120,
                       checked: data.checkedThree,
                       index: 3,
-                      text: 'Programming',
-                      description: 'Computer programming or coding is the composition of sequences of instructions, called programs, that computers can follow to perform tasks. It involves designing and implementing algorithms, step-by-step specifications of procedures, by writing code in one or more programming languages.',
-                      image: '3',
+                      text: data.box.get('name1') ?? '',
+                      description: data.box.get('description1') ?? '',
+                      image: data.box.get('photo1') == null
+                          ? const AssetImage('assets/images/2.jpg')
+                          : MemoryImage(base64Decode(data.box.get('photo1')))
                     ),
                     Positioned(
                       top: 0,

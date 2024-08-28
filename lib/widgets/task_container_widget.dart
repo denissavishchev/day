@@ -21,7 +21,7 @@ class TaskContainerWidget extends StatelessWidget {
   final int index;
   final String text;
   final String description;
-  final String image;
+  final ImageProvider<Object> image;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class TaskContainerWidget extends StatelessWidget {
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/$image.jpg'),fit: BoxFit.cover,
+                            image: image, fit: BoxFit.cover,
                         ),
                         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
                         boxShadow: const [

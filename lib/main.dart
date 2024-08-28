@@ -10,6 +10,7 @@ Future main() async{
   await Hive.initFlutter();
   Hive.registerAdapter(TasksModelAdapter());
   await Hive.openBox<TasksModel>('tasks');
+  await Hive.openBox('plans');
   runApp(const MyApp());
 }
 

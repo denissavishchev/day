@@ -23,7 +23,9 @@ class _DaySwitchWidgetState extends State<DaySwitchWidget> {
     data.initDay();
     data.updateTimer();
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      data.updateTimer();
+      setState(() {
+        data.updateTimer();
+      });
     });
     super.initState();
   }
