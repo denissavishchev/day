@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:day/models/tasks_model.dart';
 import 'package:day/screens/main_screen.dart';
 import 'package:day/widgets/button_widget.dart';
@@ -35,27 +34,21 @@ class PlanScreen extends StatelessWidget {
                           index: 3,
                           text: data.box.get('name3') ?? '',
                           description: data.box.get('description3') ?? '',
-                          image: data.box.get('photo3') == null
-                              ? const AssetImage('assets/images/2.jpg')
-                              : MemoryImage(base64Decode(data.box.get('photo3')))
+                          icon: data.box.get('icon3') ?? '',
                         ),
                         PlanContainerWidget(
                           position: size.height * 0.2 + 60,
                           index: 2,
                           text: data.box.get('name2') ?? '',
                           description: data.box.get('description2') ?? '',
-                          image: data.box.get('photo2') == null
-                              ? const AssetImage('assets/images/2.jpg')
-                              : MemoryImage(base64Decode(data.box.get('photo2'))),
+                          icon: data.box.get('icon2') ?? '',
                         ),
                         PlanContainerWidget(
                           position: 80,
                           index: 1,
                           text: data.box.get('name1') ?? '',
                           description: data.box.get('description1') ?? '',
-                          image: data.box.get('photo1') == null
-                              ? const AssetImage('assets/images/2.jpg')
-                              : MemoryImage(base64Decode(data.box.get('photo1'))),
+                          icon: data.box.get('icon1') ?? '',
                         ),
                         Positioned(
                           top: 0,
@@ -104,7 +97,7 @@ class PlanScreen extends StatelessWidget {
                                   onDoubleTap: () => data.addTaskToPlan(
                                       tasks[index].name,
                                       tasks[index].description,
-                                      tasks[index].photo,
+                                      tasks[index].icon,
                                   ),
                                   child: Container(
                                     width: 120,

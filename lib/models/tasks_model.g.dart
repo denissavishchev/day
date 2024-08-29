@@ -19,7 +19,7 @@ class TasksModelAdapter extends TypeAdapter<TasksModel> {
     return TasksModel()
       ..name = fields[0] as String
       ..description = fields[1] as String
-      ..photo = fields[2] as String
+      ..icon = fields[2] as String
       ..time = fields[3] as String;
   }
 
@@ -32,7 +32,7 @@ class TasksModelAdapter extends TypeAdapter<TasksModel> {
       ..writeByte(1)
       ..write(obj.description)
       ..writeByte(2)
-      ..write(obj.photo)
+      ..write(obj.icon)
       ..writeByte(3)
       ..write(obj.time);
   }

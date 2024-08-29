@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'models/boxes.dart';
 import 'models/tasks_model.dart';
 
@@ -24,29 +20,27 @@ class MainProvider with ChangeNotifier {
   String dayDuration = '';
   String endTime = '';
   String previousDayDuration = '';
-
-  late XFile? file;
-  String base64String = '';
+  String icon = '';
 
   Box box = Hive.box('plans');
 
-  Future addTaskToPlan(String name, String description, String photo) async{
+  Future addTaskToPlan(String name, String description, String icon) async{
     if(box.get('name1') == null){
       await box.put('name1', name);
       await box.put('description1', description);
-      await box.put('photo1', photo);
+      await box.put('icon1', icon);
       await box.put('status1', false);
       await box.put('deadline1', '');
     }else if(box.get('name2') == null){
       await box.put('name2', name);
       await box.put('description2', description);
-      await box.put('photo2', photo);
+      await box.put('icon2', icon);
       await box.put('status2', false);
       await box.put('deadline2', '');
     }else if(box.get('name3') == null){
       await box.put('name3', name);
       await box.put('description3', description);
-      await box.put('photo3', photo);
+      await box.put('icon3', icon);
       await box.put('status3', false);
       await box.put('deadline3', '');
     }else{
@@ -58,8 +52,8 @@ class MainProvider with ChangeNotifier {
   Future deleteTaskFromPlan(int index) async{
     box.delete('name$index');
     box.delete('description$index');
-    box.delete('photo$index');
     box.delete('status$index');
+    box.delete('icon$index');
     box.delete('deadline$index');
     notifyListeners();
   }
@@ -68,24 +62,12 @@ class MainProvider with ChangeNotifier {
       final tasks = TasksModel()
         ..name = nameTextController.text
         ..description = descriptionTextController.text
-        ..photo = base64String
+        ..icon = 'remove'
         ..time = DateTime.now().toString();
       final box = Boxes.addTaskToBase();
       box.add(tasks);
-      base64String = '';
       nameTextController.clear();
       descriptionTextController.clear();
-    notifyListeners();
-  }
-
-  Future pickAnImage()async{
-    ImagePicker image = ImagePicker();
-    file = await image.pickImage(source: ImageSource.camera,
-        maxHeight: 1000.0,
-        maxWidth: 1000.0);
-    if(file == null) return;
-    List<int> imageBytes = File(file!.path).readAsBytesSync();
-    base64String = base64Encode(imageBytes);
     notifyListeners();
   }
 

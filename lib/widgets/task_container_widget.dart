@@ -13,7 +13,7 @@ class TaskContainerWidget extends StatelessWidget {
     required this.index,
     required this.text,
     required this.description,
-    required this.image,
+    required this.icon,
   });
 
   final double position;
@@ -21,7 +21,7 @@ class TaskContainerWidget extends StatelessWidget {
   final int index;
   final String text;
   final String description;
-  final ImageProvider<Object> image;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +59,15 @@ class TaskContainerWidget extends StatelessWidget {
                     width: size.width * 0.25,
                     clipBehavior: Clip.hardEdge,
                     margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: image, fit: BoxFit.cover,
-                        ),
-                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
-                        boxShadow: const [
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+                        boxShadow: [
                           BoxShadow(
                               color: kBlue,
                               spreadRadius: 1,
                           )
                         ]
                     ),
-                    child: Image.asset('assets/images/shadow.png', fit: BoxFit.fill,),
                   ),
                   Expanded(
                     child: Padding(
@@ -80,6 +76,8 @@ class TaskContainerWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(text,
+                            style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
+                          Text(icon,
                             style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 4,),
                           Center(

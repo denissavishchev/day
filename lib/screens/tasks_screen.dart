@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:day/main_provider.dart';
 import 'package:day/models/boxes.dart';
 import 'package:day/models/tasks_model.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import 'dart:io';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -79,20 +77,15 @@ class TasksScreen extends StatelessWidget {
                                                 width: size.width * 0.2,
                                                 clipBehavior: Clip.hardEdge,
                                                 margin: const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: MemoryImage(base64Decode(tasks[index].photo)),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    borderRadius: const BorderRadius.all(Radius.circular(18)),
-                                                    boxShadow: const [
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                                                    boxShadow: [
                                                       BoxShadow(
                                                         color: kBlue,
                                                         spreadRadius: 1,
                                                       )
                                                     ]
                                                 ),
-                                                child: Image.asset('assets/images/shadow.png', fit: BoxFit.fill,),
                                               ),
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,20 +148,6 @@ class TasksScreen extends StatelessWidget {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () => data.pickAnImage(),
-                                          child: Container(
-                                            height: size.height * 0.25,
-                                            clipBehavior: Clip.hardEdge,
-                                            decoration: const BoxDecoration(
-                                                color: kBlue,
-                                                borderRadius: BorderRadius.all(Radius.circular(18))
-                                            ),
-                                            child: data.base64String == ''
-                                                ? const Center(child: Icon(Icons.photo, color: kRed, size: 40,))
-                                                : Image.file(File(data.file!.path), fit: BoxFit.fill,),
-                                          ),
-                                        ),
                                         TextField(
                                           controller: data.nameTextController,
                                           cursorColor: kRed,

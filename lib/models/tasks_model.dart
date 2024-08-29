@@ -8,7 +8,7 @@ class TasksModel extends HiveObject{
   @HiveField(1)
   late String description;
   @HiveField(2)
-  late String photo;
+  late String icon;
   @HiveField(3)
   late String time;
 }

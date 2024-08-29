@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:day/main_provider.dart';
 import 'package:day/screens/plan_screen.dart';
 import 'package:day/screens/tasks_screen.dart';
@@ -97,9 +96,7 @@ class MainScreen extends StatelessWidget {
                       index: 1,
                       text: data.box.get('name3') ?? '',
                       description: data.box.get('description3') ?? '',
-                      image: data.box.get('photo3') == null
-                          ? const AssetImage('assets/images/2.jpg')
-                          : MemoryImage(base64Decode(data.box.get('photo3')))
+                      icon: data.box.get('icon3') ?? '',
                     ),
                     TaskContainerWidget(
                       position: size.height * 0.2 + 100,
@@ -107,9 +104,7 @@ class MainScreen extends StatelessWidget {
                       index: 2,
                       text: data.box.get('name2') ?? '',
                       description: data.box.get('description2') ?? '',
-                      image: data.box.get('photo2') == null
-                          ? const AssetImage('assets/images/2.jpg')
-                          : MemoryImage(base64Decode(data.box.get('photo2')))
+                      icon: data.box.get('icon2') ?? '',
                     ),
                     TaskContainerWidget(
                       position: 120,
@@ -117,9 +112,7 @@ class MainScreen extends StatelessWidget {
                       index: 3,
                       text: data.box.get('name1') ?? '',
                       description: data.box.get('description1') ?? '',
-                      image: data.box.get('photo1') == null
-                          ? const AssetImage('assets/images/2.jpg')
-                          : MemoryImage(base64Decode(data.box.get('photo1')))
+                      icon: data.box.get('icon1') ?? '',
                     ),
                     Positioned(
                       top: 0,
