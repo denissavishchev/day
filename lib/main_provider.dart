@@ -83,7 +83,7 @@ class MainProvider with ChangeNotifier {
       final tasks = TasksModel()
         ..name = nameTextController.text
         ..description = descriptionTextController.text
-        ..icon = 'remove'
+        ..icon = icon
         ..time = DateTime.now().toString();
       final box = Boxes.addTaskToBase();
       box.add(tasks);

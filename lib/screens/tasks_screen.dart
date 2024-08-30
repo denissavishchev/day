@@ -14,6 +14,7 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    double topPadding = MediaQuery.of(context).padding.top;
     return Consumer<MainProvider>(
         builder: (context, data, _){
           return Scaffold(
@@ -30,7 +31,7 @@ class TasksScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: size.height * 0.9,
+                            height: size.height - topPadding,
                             width: size.width * 0.55,
                             clipBehavior: Clip.hardEdge,
                             decoration: BoxDecoration(
@@ -42,7 +43,6 @@ class TasksScreen extends StatelessWidget {
                                   begin: Alignment.bottomRight,
                                   end: Alignment.topLeft,
                                 ),
-                                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
                                 boxShadow: [
                                   BoxShadow(
                                       color: kBlack.withOpacity(0.6),
@@ -69,22 +69,19 @@ class TasksScreen extends StatelessWidget {
                                           margin: const EdgeInsets.fromLTRB(4, 0, 4, 4),
                                           decoration: const BoxDecoration(
                                             color: kBlue,
-                                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
                                           ),
                                           child: Row(
                                             children: [
                                               Container(
-                                                width: size.width * 0.2,
+                                                width: size.width * 0.22,
+                                                height: size.width * 0.22,
                                                 clipBehavior: Clip.hardEdge,
                                                 margin: const EdgeInsets.all(8),
-                                                decoration: const BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: kBlue,
-                                                        spreadRadius: 1,
-                                                      )
-                                                    ]
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage('assets/images/${tasks[index].icon}.png')),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
                                                 ),
                                               ),
                                               Column(
@@ -118,101 +115,103 @@ class TasksScreen extends StatelessWidget {
                                 })
                           ),
                           SizedBox(
-                            height: size.height * 0.8,
+                            height: size.height - topPadding,
                             child: Column(
                               children: [
-                                Container(
-                                  height: size.height * 0.7,
-                                  width: size.width * 0.38,
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          kGrey,
-                                          kBlue,
-                                        ],
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                      ),
-                                      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: kBlack.withOpacity(0.6),
-                                            blurRadius: 8,
-                                            spreadRadius: 2,
-                                            offset: const Offset(0, 1)
-                                        )
-                                      ]
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8, 18, 8, 0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Wrap(
-                                          spacing: 4,
-                                          runSpacing: 4,
-                                          children: List.generate(12, ((i){
-                                            return GestureDetector(
-                                              onTap: () => data.updateIcon(data.icons[i]),
-                                              child: Container(
-                                                width: size.height * 0.05,
-                                                height: size.height * 0.05,
-                                                clipBehavior: Clip.hardEdge,
-                                                decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: data.icon == data.icons[i]
-                                                            ? kRed
-                                                            : kBlack.withOpacity(0),
-                                                        blurRadius: 2,
-                                                        spreadRadius: 2
-                                                      )
-                                                    ],
-                                                    gradient: const LinearGradient(
-                                                        colors: [
-                                                          kGrey,
-                                                          kWhite
-                                                        ],
-                                                        begin: Alignment.bottomCenter,
-                                                        end: Alignment.topCenter
-                                                    ),
-                                                    borderRadius: const BorderRadius.all(Radius.circular(8))
-                                                ),
-                                                child: Image.asset('assets/images/${data.icons[i]}.png'),
-                                              ),
-                                            );
-                                          })),
-                                        ),
-                                        TextField(
-                                          controller: data.nameTextController,
-                                          cursorColor: kRed,
-                                          decoration: textFieldDecoration.copyWith(
-                                              label: const Text('Task',)),
-                                          maxLength: 32,
-                                        ),
-                                        TextField(
-                                          controller: data.descriptionTextController,
-                                          cursorColor: kRed,
-                                          maxLines: 4,
-                                          decoration: textFieldDecoration.copyWith(
-                                              label: const Text('Description',)),
-                                          maxLength: 64,
-                                        ),
-                                        ButtonWidget(
-                                            onTap: () => data.addTaskBase(),
-                                            icon: Icons.add
-                                        ),
-                                        const SizedBox(height: 8,),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(),
+                                const SizedBox(height: 12,),
                                 ButtonWidget(
                                     onTap: () => Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (context) =>
                                         const MainScreen())),
-                                    icon: Icons.arrow_back_ios_new)
+                                    icon: Icons.arrow_back_ios_new),
+                                const SizedBox(height: 12,),
+                                Expanded(
+                                  child: Container(
+                                    width: size.width * 0.38,
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            kGrey,
+                                            kBlue,
+                                          ],
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
+                                        ),
+                                        borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: kBlack.withOpacity(0.6),
+                                              blurRadius: 8,
+                                              spreadRadius: 2,
+                                              offset: const Offset(0, 1)
+                                          )
+                                        ]
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(8, 18, 8, 0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextField(
+                                            controller: data.nameTextController,
+                                            cursorColor: kRed,
+                                            decoration: textFieldDecoration.copyWith(
+                                                label: const Text('Task',)),
+                                            maxLength: 32,
+                                          ),
+                                          TextField(
+                                            controller: data.descriptionTextController,
+                                            cursorColor: kRed,
+                                            maxLines: 3,
+                                            decoration: textFieldDecoration.copyWith(
+                                                label: const Text('Description',)),
+                                            maxLength: 64,
+                                          ),
+                                          Wrap(
+                                            spacing: 12,
+                                            runSpacing: 10,
+                                            children: List.generate(12, ((i){
+                                              return GestureDetector(
+                                                onTap: () => data.updateIcon(data.icons[i]),
+                                                child: Container(
+                                                  width: size.height * 0.07,
+                                                  height: size.height * 0.07,
+                                                  clipBehavior: Clip.hardEdge,
+                                                  decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: data.icon == data.icons[i]
+                                                              ? kRed
+                                                              : kBlack.withOpacity(0),
+                                                          blurRadius: 2,
+                                                          spreadRadius: 2
+                                                        )
+                                                      ],
+                                                      gradient: const LinearGradient(
+                                                          colors: [
+                                                            kGrey,
+                                                            kWhite
+                                                          ],
+                                                          begin: Alignment.bottomCenter,
+                                                          end: Alignment.topCenter
+                                                      ),
+                                                      borderRadius: const BorderRadius.all(Radius.circular(4))
+                                                  ),
+                                                  child: Image.asset('assets/images/${data.icons[i]}.png'),
+                                                ),
+                                              );
+                                            })),
+                                          ),
+                                          ButtonWidget(
+                                              onTap: () => data.addTaskBase(),
+                                              icon: Icons.add
+                                          ),
+                                          const SizedBox(height: 8,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           )

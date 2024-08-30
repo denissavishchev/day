@@ -55,17 +55,14 @@ class PlanContainerWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: size.width * 0.25,
+                      width: size.width * 0.3,
+                      height: size.width * 0.3,
                       clipBehavior: Clip.hardEdge,
-                      margin: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: kBlue,
-                              spreadRadius: 1,
-                            )
-                          ]
+                      margin: const EdgeInsets.fromLTRB(12, 18, 12, 0),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/$icon.png')),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
                       ),
                     ),
                     Expanded(

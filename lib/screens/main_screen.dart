@@ -40,7 +40,7 @@ class MainScreen extends StatelessWidget {
                                 end: Alignment.bottomRight
                             ),
                             borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(18)),
+                                top: Radius.circular(4)),
                             boxShadow: [
                               BoxShadow(
                                   color: kRed.withOpacity(0.4),
@@ -61,7 +61,7 @@ class MainScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: kRed,
                             borderRadius: const BorderRadius.all(
-                                Radius.circular(18)),
+                                Radius.circular(4)),
                             boxShadow: [
                               BoxShadow(
                                   color: kRed.withOpacity(0.6),

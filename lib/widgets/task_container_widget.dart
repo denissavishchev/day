@@ -42,7 +42,7 @@ class TaskContainerWidget extends StatelessWidget {
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
-                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
+                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(4)),
                   boxShadow: [
                     BoxShadow(
                         color: kBlack.withOpacity(0.6),
@@ -60,11 +60,10 @@ class TaskContainerWidget extends StatelessWidget {
                     height: size.width * 0.3,
                     clipBehavior: Clip.hardEdge,
                     margin: const EdgeInsets.fromLTRB(12, 18, 12, 0),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                      color: kBlue,
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
                       image: DecorationImage(
-                          image: AssetImage('assets/images/pizza.png')
+                          image: AssetImage('assets/images/$icon.png')
                       )
                     ),
                   ),
@@ -81,7 +80,7 @@ class TaskContainerWidget extends StatelessWidget {
                           const SizedBox(height: 4,),
                           Center(
                             child: Stack(
-                              alignment: Alignment.center,
+                              alignment: Alignment.centerLeft,
                               children: [
                                 Container(
                                   width: size.width * 0.4,
@@ -99,7 +98,7 @@ class TaskContainerWidget extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  width: size.width * 0.45,
+                                  width: size.width * 0.35,
                                   height: 1,
                                   decoration: const BoxDecoration(
                                       color: kGrey,
