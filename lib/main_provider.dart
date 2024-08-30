@@ -20,9 +20,30 @@ class MainProvider with ChangeNotifier {
   String dayDuration = '';
   String endTime = '';
   String previousDayDuration = '';
-  String icon = '';
+  String icon = 'art';
+
 
   Box box = Hive.box('plans');
+
+  List<String> icons = [
+    'art',
+    'ball',
+    'bicycle',
+    'book',
+    'cup',
+    'laptop',
+    'man',
+    'map',
+    'meditation',
+    'phone',
+    'pizza',
+    'tree',
+  ];
+
+  void updateIcon(String i){
+    icon = i;
+    notifyListeners();
+  }
 
   Future addTaskToPlan(String name, String description, String icon) async{
     if(box.get('name1') == null){

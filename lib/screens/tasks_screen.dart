@@ -148,6 +148,41 @@ class TasksScreen extends StatelessWidget {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Wrap(
+                                          spacing: 4,
+                                          runSpacing: 4,
+                                          children: List.generate(12, ((i){
+                                            return GestureDetector(
+                                              onTap: () => data.updateIcon(data.icons[i]),
+                                              child: Container(
+                                                width: size.height * 0.05,
+                                                height: size.height * 0.05,
+                                                clipBehavior: Clip.hardEdge,
+                                                decoration: BoxDecoration(
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: data.icon == data.icons[i]
+                                                            ? kRed
+                                                            : kBlack.withOpacity(0),
+                                                        blurRadius: 2,
+                                                        spreadRadius: 2
+                                                      )
+                                                    ],
+                                                    gradient: const LinearGradient(
+                                                        colors: [
+                                                          kGrey,
+                                                          kWhite
+                                                        ],
+                                                        begin: Alignment.bottomCenter,
+                                                        end: Alignment.topCenter
+                                                    ),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(8))
+                                                ),
+                                                child: Image.asset('assets/images/${data.icons[i]}.png'),
+                                              ),
+                                            );
+                                          })),
+                                        ),
                                         TextField(
                                           controller: data.nameTextController,
                                           cursorColor: kRed,

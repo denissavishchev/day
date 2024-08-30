@@ -56,17 +56,16 @@ class TaskContainerWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: size.width * 0.25,
+                    width: size.width * 0.3,
+                    height: size.width * 0.3,
                     clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.fromLTRB(12, 18, 12, 0),
                     decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: kBlue,
-                              spreadRadius: 1,
-                          )
-                        ]
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                      color: kBlue,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/pizza.png')
+                      )
                     ),
                   ),
                   Expanded(
