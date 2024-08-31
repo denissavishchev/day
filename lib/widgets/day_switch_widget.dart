@@ -113,7 +113,7 @@ class _DaySwitchWidgetState extends State<DaySwitchWidget> {
                     duration: const Duration(milliseconds: 500),
                     alignment: data.day ? Alignment.centerLeft : Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () => data.switchDay(),
+                      onTap: () => data.switchDay(context),
                       child: Container(
                         width: 80,
                         height: 80,

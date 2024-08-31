@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:day/constants.dart';
+import 'package:day/screens/plan_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +25,10 @@ class MainProvider with ChangeNotifier {
   String previousDayDuration = '';
   String icon = 'art';
 
+  DateTime time1 = DateTime.now();
+  DateTime time2 = DateTime.now();
+  DateTime time3 = DateTime.now();
+
 
   Box box = Hive.box('plans');
 
@@ -39,6 +46,27 @@ class MainProvider with ChangeNotifier {
     'pizza',
     'tree',
   ];
+
+  void showTime(context, int index){
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context){
+          return SizedBox(
+            height: 250,
+            child: CupertinoDatePicker(
+              backgroundColor: kWhite,
+                initialDateTime: index == 1 ? time1 : index == 2 ? time2 : time3,
+                onDateTimeChanged: (newTime){
+                  index == 1 ? time1 = newTime : index == 2 ? time2 = newTime : time3 = newTime;
+                  notifyListeners();
+                },
+                use24hFormat: true,
+              mode: CupertinoDatePickerMode.time,
+            ),
+          );
+        }
+    );
+  }
 
   void updateIcon(String i){
     icon = i;
@@ -64,8 +92,6 @@ class MainProvider with ChangeNotifier {
       await box.put('icon3', icon);
       await box.put('status3', false);
       await box.put('deadline3', '');
-    }else{
-      print('Not Empty');
     }
     notifyListeners();
   }
@@ -124,13 +150,15 @@ class MainProvider with ChangeNotifier {
     }
   }
 
-  void switchDay() async{
+  void switchDay(context) async{
     day = !day;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if(day){
       await prefs.setBool('day', true);
       await prefs.setString('startTime', DateTime.now().toString());
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
+      Future.delayed(const Duration(milliseconds: 1000), () => Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const PlanScreen())));
     }else{
       await prefs.setString('endTime', DateTime.now().toString());
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));

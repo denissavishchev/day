@@ -75,8 +75,6 @@ class TaskContainerWidget extends StatelessWidget {
                         children: [
                           Text(text,
                             style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
-                          Text(icon,
-                            style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 4,),
                           Center(
                             child: Stack(

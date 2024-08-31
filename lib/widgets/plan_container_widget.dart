@@ -1,6 +1,7 @@
 import 'package:day/main_provider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:day/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 
@@ -73,8 +74,6 @@ class PlanContainerWidget extends StatelessWidget {
                           children: [
                             Text(text,
                               style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
-                            Text(icon,
-                              style: const TextStyle(color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),),
                             const SizedBox(height: 4,),
                             Center(
                               child: Stack(
@@ -119,9 +118,25 @@ class PlanContainerWidget extends StatelessWidget {
                     Container(
                       width: size.width * 0.25,
                       margin: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.symmetric(vertical: 18),
                       decoration: const BoxDecoration(
                         color: kBlue,
                         borderRadius: BorderRadius.vertical(bottom: Radius.circular(18))
+                      ),
+                      child: Column(
+                        children: [
+                          Text(index == 1
+                              ? DateFormat('HH:mm').format(data.time1)
+                              : index == 2
+                              ? DateFormat('HH:mm').format(data.time2)
+                              : DateFormat('HH:mm').format(data.time3),
+                            style: const TextStyle(color: kWhite),),
+                          const SizedBox(height: 18,),
+                          ButtonWidget(
+                              onTap: () => data.showTime(context, index),
+                              icon: Icons.alarm
+                          )
+                        ],
                       ),
                     )
                   ],
