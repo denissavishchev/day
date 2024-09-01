@@ -7,6 +7,7 @@ import 'package:day/widgets/task_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+import 'history_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -86,6 +87,12 @@ class MainScreen extends StatelessWidget {
                                   const PlanScreen())),
                               icon: Icons.local_play,
                             ),
+                            const SizedBox(width: 12,),
+                            ButtonWidget(
+                              onTap: () => Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                  const HistoryScreen())),
+                              icon: Icons.history,)
                           ],
                         ),
                       ),
@@ -96,7 +103,7 @@ class MainScreen extends StatelessWidget {
                       index: 1,
                       text: data.box.get('name3') ?? '',
                       description: data.box.get('description3') ?? '',
-                      icon: data.box.get('icon3') ?? '',
+                      icon: data.box.get('icon3') ?? 'art',
                     ),
                     TaskContainerWidget(
                       position: size.height * 0.2 + 100,
@@ -104,7 +111,7 @@ class MainScreen extends StatelessWidget {
                       index: 2,
                       text: data.box.get('name2') ?? '',
                       description: data.box.get('description2') ?? '',
-                      icon: data.box.get('icon2') ?? '',
+                      icon: data.box.get('icon2') ?? 'art',
                     ),
                     TaskContainerWidget(
                       position: 120,
@@ -112,7 +119,7 @@ class MainScreen extends StatelessWidget {
                       index: 3,
                       text: data.box.get('name1') ?? '',
                       description: data.box.get('description1') ?? '',
-                      icon: data.box.get('icon1') ?? '',
+                      icon: data.box.get('icon1') ?? 'art',
                     ),
                     Positioned(
                       top: 0,

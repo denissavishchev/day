@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
+import 'models/history_model.dart';
 import 'models/tasks_model.dart';
 
 class MainProvider with ChangeNotifier {
@@ -72,6 +73,7 @@ class MainProvider with ChangeNotifier {
     icon = i;
     notifyListeners();
   }
+
 
   Future addTaskToPlan(String name, String description, String icon) async{
     if(box.get('name1') == null){
@@ -147,7 +149,35 @@ class MainProvider with ChangeNotifier {
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
       previousDayDuration = prefs.getString('previousDayDuration').toString();
       day = prefs.getBool('day')!;
+      if(box.get('status1') != null){
+        checkedOne = box.get('status1');
+      }
+      if(box.get('status2') != null){
+        checkedTwo = box.get('status2');
+      }
+      if(box.get('status3') != null){
+        checkedThree = box.get('status3');
+      }
+      notifyListeners();
     }
+  }
+
+  void endDay(SharedPreferences prefs) async{
+    final history = HistoryModel()
+      ..time = prefs.getString('startTime').toString()
+      ..duration = dayDuration
+      ..name1 = box.get('name1')
+      ..description1 = box.get('description1')
+      ..status1 = box.get('status3').toString()
+      ..name2 = box.get('name2')
+      ..description2 = box.get('description2')
+      ..status2 = box.get('status2').toString()
+      ..name3 = box.get('name3')
+      ..description3 = box.get('description3')
+      ..status3 = box.get('status1').toString();
+    final historyBox = Boxes.addHistoryToBase();
+    historyBox.add(history);
+    notifyListeners();
   }
 
   void switchDay(context) async{
@@ -159,23 +189,34 @@ class MainProvider with ChangeNotifier {
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
       Future.delayed(const Duration(milliseconds: 1000), () => Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => const PlanScreen())));
+      await box.put('status1', false);
+      await box.put('status2', false);
+      await box.put('status3', false);
+      checkedOne = false;
+      checkedTwo = false;
+      checkedThree = false;
+      notifyListeners();
     }else{
       await prefs.setString('endTime', DateTime.now().toString());
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
       await prefs.setString('previousDayDuration', dayDuration);
       previousDayDuration = prefs.getString('previousDayDuration').toString();
       await prefs.setBool('day', false);
+      endDay(prefs);
     }
     notifyListeners();
   }
 
-  void switchChecked(int checked){
+  void switchChecked(int checked)async{
     if(checked == 1){
         checkedOne = !checkedOne;
+        await box.put('status1', checkedOne);
     }if(checked == 2){
       checkedTwo = !checkedTwo;
+      await box.put('status2', checkedTwo);
     }if(checked == 3){
       checkedThree = !checkedThree;
+      await box.put('status3', checkedThree);
     }
   notifyListeners();
   }
