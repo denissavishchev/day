@@ -2,9 +2,9 @@ import 'package:day/constants.dart';
 import 'package:day/models/history_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:intl/intl.dart';
 import '../models/boxes.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/history_container_widget.dart';
 import 'main_screen.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -37,76 +37,9 @@ class HistoryScreen extends StatelessWidget {
                       return ListView.builder(
                         itemCount: history.length,
                           itemBuilder: (context, index){
-                          return Container(
-                            width: size.width,
-                            height: 104,
-                            margin: const EdgeInsets.all(12),
-                            padding: const EdgeInsets.all(12),
-                            decoration: const BoxDecoration(
-                              color: kGrey,
-                              borderRadius: BorderRadius.all(Radius.circular(4))
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text('Date ${DateFormat('dd.MM.yyyy').format(DateTime.parse(history[index].time))}'),
-                                    const SizedBox(width: 8,),
-                                    Text('Duration ${history[index].duration}'),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(history[index].name1),
-                                    const SizedBox(width: 4,),
-                                    Text(history[index].description1),
-                                    const SizedBox(width: 4,),
-                                    Text(history[index].status1),
-                                    const SizedBox(width: 4,),
-                                    Container(
-                                      width: 5,
-                                      height: 5,
-                                      decoration: BoxDecoration(
-                                        color: history[index].status1 == 'true' ? Colors.green : kRed,
-                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(history[index].name2),
-                                    const SizedBox(width: 4,),
-                                    Text(history[index].description2),
-                                    const SizedBox(width: 4,),
-                                    Container(
-                                      width: 5,
-                                      height: 5,
-                                      decoration: BoxDecoration(
-                                        color: history[index].status2 == 'true' ? Colors.green : kRed,
-                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(history[index].name3),
-                                    const SizedBox(width: 4,),
-                                    Text(history[index].description3),
-                                    const SizedBox(width: 4,),
-                                    Container(
-                                      width: 5,
-                                      height: 5,
-                                      decoration: BoxDecoration(
-                                        color: history[index].status3 == 'true' ? Colors.green : kRed,
-                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                          return HistoryContainerWidget(
+                            history: history,
+                            index: index,
                           );
                           }
                       );
@@ -120,3 +53,5 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 }
+
+
