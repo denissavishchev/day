@@ -24,7 +24,7 @@ class MainProvider with ChangeNotifier {
   String dayDuration = '';
   String endTime = '';
   String previousDayDuration = '';
-  String icon = 'art';
+  String icon = 'drums';
 
   DateTime time1 = DateTime.now();
   DateTime time2 = DateTime.now();
@@ -34,18 +34,36 @@ class MainProvider with ChangeNotifier {
   Box box = Hive.box('plans');
 
   List<String> icons = [
+    'drums',
     'art',
+    'toy',
     'ball',
+    'piano',
+    'cat',
     'bicycle',
+    'house',
     'book',
     'cup',
+    'butterfly',
+    'money',
     'laptop',
+    'guitar',
     'man',
+    'sushi',
+    'photo',
+    'cake',
+    'cards',
     'map',
+    'bulb',
     'meditation',
+    'gear',
     'phone',
+    'globe',
     'pizza',
+    'dog',
+    'bath',
     'tree',
+    'car',
   ];
 
   void showTime(context, int index){

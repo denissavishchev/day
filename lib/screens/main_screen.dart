@@ -103,7 +103,7 @@ class MainScreen extends StatelessWidget {
                       index: 1,
                       text: data.box.get('name3') ?? '',
                       description: data.box.get('description3') ?? '',
-                      icon: data.box.get('icon3') ?? 'art',
+                      icon: data.box.get('icon3') ?? 'placeholder',
                     ),
                     TaskContainerWidget(
                       position: size.height * 0.2 + 100,
@@ -111,7 +111,7 @@ class MainScreen extends StatelessWidget {
                       index: 2,
                       text: data.box.get('name2') ?? '',
                       description: data.box.get('description2') ?? '',
-                      icon: data.box.get('icon2') ?? 'art',
+                      icon: data.box.get('icon2') ?? 'placeholder',
                     ),
                     TaskContainerWidget(
                       position: 120,
@@ -119,7 +119,7 @@ class MainScreen extends StatelessWidget {
                       index: 3,
                       text: data.box.get('name1') ?? '',
                       description: data.box.get('description1') ?? '',
-                      icon: data.box.get('icon1') ?? 'art',
+                      icon: data.box.get('icon1') ?? 'placeholder',
                     ),
                     Positioned(
                       top: 0,
