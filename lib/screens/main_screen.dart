@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'history_screen.dart';
+import 'notes_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -55,46 +56,68 @@ class MainScreen extends StatelessWidget {
                     ),
                     Positioned(
                       top: size.height * 0.66 + 90 ,
-                      child: Container(
-                        height: size.height * 0.1,
-                        width: size.width * 0.8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: kRed,
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(4)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: kRed.withOpacity(0.6),
-                                  blurRadius: 8,
-                                  spreadRadius: 4,
-                              )
-                            ]
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ButtonWidget(
-                              onTap: () => Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) =>
-                                  const TasksScreen())),
-                              icon: Icons.playlist_add_check_outlined,
+                      child: Stack(
+                        children: [
+                          Container(
+                              height: size.height * 0.1,
+                              width: size.width * 0.8,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(4)),
+                              ),
+                              child: Image.asset('assets/images/cityBg.png', fit: BoxFit.cover,)),
+                          Container(
+                            height: size.height * 0.1,
+                            width: size.width * 0.8,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: kRed.withOpacity(0.5),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(4)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: kRed.withOpacity(0.8),
+                                      blurRadius: 8,
+                                      spreadRadius: 4,
+                                  )
+                                ]
                             ),
-                            const SizedBox(width: 12,),
-                            ButtonWidget(
-                              onTap: () => Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) =>
-                                  const PlanScreen())),
-                              icon: Icons.local_play,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ButtonWidget(
+                                  onTap: () => Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                      const TasksScreen())),
+                                  icon: Icons.playlist_add_check_outlined,
+                                ),
+                                const SizedBox(width: 12,),
+                                ButtonWidget(
+                                  onTap: () => Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                      const PlanScreen())),
+                                  icon: Icons.local_play,
+                                ),
+                                const SizedBox(width: 12,),
+                                ButtonWidget(
+                                  onTap: () => Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                      const HistoryScreen())),
+                                  icon: Icons.history,),
+                                const SizedBox(width: 12,),
+                                ButtonWidget(
+                                  onTap: () {
+                                    data.readNote();
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) =>
+                                        const NotesScreen()));
+                                  },
+                                  icon: Icons.note_add,)
+                              ],
                             ),
-                            const SizedBox(width: 12,),
-                            ButtonWidget(
-                              onTap: () => Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) =>
-                                  const HistoryScreen())),
-                              icon: Icons.history,)
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     TaskContainerWidget(

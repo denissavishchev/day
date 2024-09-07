@@ -14,6 +14,7 @@ class MainProvider with ChangeNotifier {
 
   final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
+  final notesTextController = TextEditingController();
 
   bool day = true;
   bool checkedOne = false;
@@ -29,7 +30,6 @@ class MainProvider with ChangeNotifier {
   DateTime time1 = DateTime.now();
   DateTime time2 = DateTime.now();
   DateTime time3 = DateTime.now();
-
 
   Box box = Hive.box('plans');
 
@@ -65,6 +65,14 @@ class MainProvider with ChangeNotifier {
     'tree',
     'car',
   ];
+
+  Future saveNote(String note) async{
+    await box.put('note', note);
+  }
+
+  Future readNote() async{
+    notesTextController.text = await box.get('note') ?? '';
+  }
 
   void showTime(context, int index){
     showCupertinoModalPopup(
