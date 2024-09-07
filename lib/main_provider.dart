@@ -27,9 +27,9 @@ class MainProvider with ChangeNotifier {
   String previousDayDuration = '';
   String icon = 'drums';
 
-  DateTime time1 = DateTime.now();
-  DateTime time2 = DateTime.now();
-  DateTime time3 = DateTime.now();
+  String timer1 = '';
+  String timer2 = '';
+  String timer3 = '';
 
   Box box = Hive.box('plans');
 
@@ -66,6 +66,61 @@ class MainProvider with ChangeNotifier {
     'car',
   ];
 
+  void deleteAlarm(int index){
+    switch(index){
+      case 1:
+        box.delete('time1');
+        timer1 = '';
+        break;
+      case 2:
+        box.delete('time2');
+        timer2 = '';
+        break;
+      case 3:
+        box.delete('time3');
+        timer3 = '';
+        break;
+    }
+    notifyListeners();
+  }
+
+  void saveAlarms(){
+    box.put('time1', timer1);
+    box.put('time2', timer2);
+    box.put('time3', timer3);
+  }
+
+  DateTime initialTime(int index) {
+    if(index == 1 && box.get('time1') != null && box.get('time1') != ''){
+      return DateTime.tryParse(box.get('time1')) ?? DateTime.now();
+    }
+    if(index == 2 && box.get('time2') != null && box.get('time2') != ''){
+      return DateTime.tryParse(box.get('time2')) ?? DateTime.now();
+    }
+    if(index == 3 && box.get('time3') != null && box.get('time3') != ''){
+      return DateTime.tryParse(box.get('time3')) ?? DateTime.now();
+    }
+    else {
+      return DateTime.now();
+    }
+
+  }
+
+  String alarmTimes(int index){
+    if(index == 1 && timer1 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(timer1));
+    }
+    if(index == 2 && timer2 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(timer2));
+    }
+    if(index == 3 && timer3 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(timer3));
+    }
+    else {
+      return '';
+    }
+  }
+
   Future saveNote(String note) async{
     await box.put('note', note);
   }
@@ -74,21 +129,35 @@ class MainProvider with ChangeNotifier {
     notesTextController.text = await box.get('note') ?? '';
   }
 
-  void showTime(context, int index){
+  void showTime(context, int index) async{
     showCupertinoModalPopup(
         context: context,
         builder: (context){
           return SizedBox(
-            height: 250,
-            child: CupertinoDatePicker(
-              backgroundColor: kWhite,
-                initialDateTime: index == 1 ? time1 : index == 2 ? time2 : time3,
-                onDateTimeChanged: (newTime){
-                  index == 1 ? time1 = newTime : index == 2 ? time2 = newTime : time3 = newTime;
-                  notifyListeners();
-                },
-                use24hFormat: true,
-              mode: CupertinoDatePickerMode.time,
+            height: 300,
+            child: Column(
+              children: [
+                TextButton(
+                    onPressed: () => deleteAlarm(index),
+                    child: const Text('Delete')),
+                SizedBox(
+                  height: 250,
+                  child: CupertinoDatePicker(
+                    backgroundColor: kWhite,
+                      initialDateTime: initialTime(index),
+                      onDateTimeChanged: (newTime){
+                        index == 1
+                            ? timer1 = newTime.toString()
+                            : index == 2
+                            ? timer2 = newTime.toString()
+                            : timer3 = newTime.toString();
+                        notifyListeners();
+                      },
+                      use24hFormat: true,
+                    mode: CupertinoDatePickerMode.time,
+                  ),
+                ),
+              ],
             ),
           );
         }
@@ -125,6 +194,7 @@ class MainProvider with ChangeNotifier {
   }
 
   Future deleteTaskFromPlan(int index) async{
+    deleteAlarm(index);
     box.delete('name$index');
     box.delete('description$index');
     box.delete('status$index');
@@ -171,6 +241,9 @@ class MainProvider with ChangeNotifier {
       day = false;
       notifyListeners();
     }else{
+      timer1 = box.get('time3') ?? '';
+      timer2 = box.get('time2') ?? '';
+      timer3 = box.get('time1') ?? '';
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
       previousDayDuration = prefs.getString('previousDayDuration').toString();
@@ -221,6 +294,11 @@ class MainProvider with ChangeNotifier {
       checkedOne = false;
       checkedTwo = false;
       checkedThree = false;
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        timer1 = box.get('time1') ?? '';
+        timer2 = box.get('time2') ?? '';
+        timer3 = box.get('time3') ?? '';
+      });
       notifyListeners();
     }else{
       await prefs.setString('endTime', DateTime.now().toString());

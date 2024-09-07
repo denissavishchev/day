@@ -15,10 +15,8 @@ class HistoryContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Container(
-      height: size.height * 0.05,
-      width: size.width * 0.30,
+      height: 32,
       margin: const EdgeInsets.fromLTRB(12, 0, 12, 8),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
@@ -43,9 +41,14 @@ class HistoryContainerWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Date ${DateFormat('dd.MM.yyyy').format(DateTime.parse(history[index].time))}'),
-          Text('Duration ${history[index].duration}'),
+          Text('Date', style: TextStyle(color: kRed.withOpacity(0.6), fontWeight: FontWeight.bold),),
+          Text(DateFormat('dd.MM.yyyy').format(DateTime.parse(history[index].time)),
+            style: const TextStyle(color: kRed,fontWeight: FontWeight.bold),),
           const SizedBox(width: 12,),
+          Text('Duration', style: TextStyle(color: kRed.withOpacity(0.6), fontWeight: FontWeight.bold)),
+          Text(history[index].duration,
+              style: const TextStyle(color: kRed,fontWeight: FontWeight.bold)),
+          const SizedBox(width: 18,),
           DotWidget(status: history[index].status1,),
           DotWidget(status: history[index].status2,),
           DotWidget(status: history[index].status3,),

@@ -33,7 +33,7 @@ class HistoryScreen extends StatelessWidget {
                 child: ValueListenableBuilder<Box<HistoryModel>>(
                     valueListenable: Boxes.addHistoryToBase().listenable(),
                     builder: (context, box, _){
-                      final history = box.values.toList().cast<HistoryModel>();
+                      final history = box.values.toList().cast<HistoryModel>().reversed.toList();
                       return ListView.builder(
                         itemCount: history.length,
                           itemBuilder: (context, index){

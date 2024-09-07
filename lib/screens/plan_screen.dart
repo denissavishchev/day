@@ -70,9 +70,12 @@ class PlanScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: ButtonWidget(
-                                onTap: () => Navigator.pushReplacement(context,
+                                onTap: () {
+                                  data.saveAlarms();
+                                  Navigator.pushReplacement(context,
                                     MaterialPageRoute(builder: (context) =>
-                                    const MainScreen())),
+                                    const MainScreen()));
+                                  },
                                 icon: Icons.home,
                               ),
                             ),

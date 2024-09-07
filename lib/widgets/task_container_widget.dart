@@ -128,6 +128,7 @@ class TaskContainerWidget extends StatelessWidget {
                       ),
                       SwitchButtonWidget(
                         checked: checked,
+                        index: index,
                         onTap: () => data.switchChecked(index)
                       ),
                     ],
