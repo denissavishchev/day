@@ -16,118 +16,79 @@ class HistoryContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Stack(
-      children: [
-        Container(
-          height: size.height * 0.05,
-          width: size.width * 0.30,
-          margin: const EdgeInsets.fromLTRB(12, 0, 0, 8),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                kGrey,
-                kBlue,
-              ],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-            ),
-            borderRadius: const BorderRadius.horizontal(left: Radius.circular(4)),
-            boxShadow: [
-              BoxShadow(
-                  color: kBlack.withOpacity(0.6),
-                  blurRadius: 8,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 1)
-              )
-            ],
-          ),
-          child: Center(child: Text('Date ${DateFormat('dd.MM.yyyy').format(DateTime.parse(history[index].time))}')),
+    return Container(
+      height: size.height * 0.05,
+      width: size.width * 0.30,
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            kBlue,
+            kGrey,
+          ],
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
         ),
-        Positioned(
-          left: size.width * 0.62,
-          child: Container(
-            height: size.height * 0.05,
-            width: size.width * (((double.parse(history[index].duration.substring(0, 2)))) -10) / 20,
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  kGrey,
-                  kBlue,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(4)),
-              boxShadow: [
-                BoxShadow(
-                    color: kBlack.withOpacity(0.6),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                    offset: const Offset(8, 1)
-                )
-              ],
-            ),
-            child: Text('Duration ${history[index].duration}'),
-          ),
-        ),
-        Positioned(
-          left: size.width * 0.32,
-          child: Container(
-            height: size.height * 0.05,
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: const BoxDecoration(
-              color: kGrey,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: size.width * 0.1,
-                  decoration: BoxDecoration(
-                    color: history[index].status1 == 'true' ? kRed : kGrey,
-                    boxShadow: [
-                      BoxShadow(
-                        color: history[index].status1 == 'true' ? kRed.withOpacity(0.9) : kGrey.withOpacity(0.5),
-                        blurRadius: 4,
-                        spreadRadius: 2,
-                      )
-                    ]
-                  ),
-                ),
-                VerticalDivider(color: kBlue.withOpacity(0.5), width: 0.7,),
-                Container(
-                  width: size.width * 0.1,
-                  decoration: BoxDecoration(
-                      color: history[index].status2 == 'true' ? kRed : kGrey,
-                      boxShadow: [
-                        BoxShadow(
-                          color: history[index].status2 == 'true' ? kRed.withOpacity(0.9) : kGrey.withOpacity(0.5),
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                        )
-                      ]
-                  ),
-                ),
-                VerticalDivider(color: kBlue.withOpacity(0.5), width: 0.7,),
-                Container(
-                  width: size.width * 0.1,
-                  decoration: BoxDecoration(
-                      color: history[index].status3 == 'true' ? kRed : kGrey,
-                      boxShadow: [
-                        BoxShadow(
-                          color: history[index].status3 == 'true' ? kRed.withOpacity(0.9) : kGrey.withOpacity(0.5),
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                        )
-                      ]
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        boxShadow: [
+          BoxShadow(
+              color: kBlack.withOpacity(0.6),
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: const Offset(0, 1)
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Date ${DateFormat('dd.MM.yyyy').format(DateTime.parse(history[index].time))}'),
+          Text('Duration ${history[index].duration}'),
+          const SizedBox(width: 12,),
+          DotWidget(status: history[index].status1,),
+          DotWidget(status: history[index].status2,),
+          DotWidget(status: history[index].status3,),
+        ],
+      )
     );
   }
 }
+
+class DotWidget extends StatelessWidget {
+  const DotWidget({
+    super.key,
+    required this.status,
+  });
+
+  final String status;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    return Container(
+      width: size.width * 0.05,
+      height: size.width * 0.05,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                status == 'true' ? kGrey : kWhite.withOpacity(0.4),
+                status == 'true' ? kRed : kGrey,
+              ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          border: Border.all(color: status == 'true' ? kBlack.withOpacity(0.4) : kWhite.withOpacity(0.3), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: kBlack.withOpacity(0.5),
+              blurRadius: 4,
+              spreadRadius: 1,
+            )
+          ]
+      ),
+    );
+  }
+}
+
