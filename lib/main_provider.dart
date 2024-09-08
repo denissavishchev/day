@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class MainProvider with ChangeNotifier {
 
@@ -27,9 +28,9 @@ class MainProvider with ChangeNotifier {
   String previousDayDuration = '';
   String icon = 'drums';
 
-  String timer1 = '';
-  String timer2 = '';
-  String timer3 = '';
+  String time1 = '';
+  String time2 = '';
+  String time3 = '';
 
   Box box = Hive.box('plans');
 
@@ -70,24 +71,24 @@ class MainProvider with ChangeNotifier {
     switch(index){
       case 1:
         box.delete('time1');
-        timer1 = '';
+        time1 = '';
         break;
       case 2:
         box.delete('time2');
-        timer2 = '';
+        time2 = '';
         break;
       case 3:
         box.delete('time3');
-        timer3 = '';
+        time3 = '';
         break;
     }
     notifyListeners();
   }
 
   void saveAlarms(){
-    box.put('time1', timer1);
-    box.put('time2', timer2);
-    box.put('time3', timer3);
+    box.put('time1', time1);
+    box.put('time2', time2);
+    box.put('time3', time3);
   }
 
   DateTime initialTime(int index) {
@@ -107,14 +108,14 @@ class MainProvider with ChangeNotifier {
   }
 
   String alarmTimes(int index){
-    if(index == 1 && timer1 != ''){
-      return DateFormat('HH:mm').format(DateTime.parse(timer1));
+    if(index == 1 && time1 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(time1));
     }
-    if(index == 2 && timer2 != ''){
-      return DateFormat('HH:mm').format(DateTime.parse(timer2));
+    if(index == 2 && time2 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(time2));
     }
-    if(index == 3 && timer3 != ''){
-      return DateFormat('HH:mm').format(DateTime.parse(timer3));
+    if(index == 3 && time3 != ''){
+      return DateFormat('HH:mm').format(DateTime.parse(time3));
     }
     else {
       return '';
@@ -147,10 +148,10 @@ class MainProvider with ChangeNotifier {
                       initialDateTime: initialTime(index),
                       onDateTimeChanged: (newTime){
                         index == 1
-                            ? timer1 = newTime.toString()
+                            ? time1 = newTime.toString()
                             : index == 2
-                            ? timer2 = newTime.toString()
-                            : timer3 = newTime.toString();
+                            ? time2 = newTime.toString()
+                            : time3 = newTime.toString();
                         notifyListeners();
                       },
                       use24hFormat: true,
@@ -241,9 +242,9 @@ class MainProvider with ChangeNotifier {
       day = false;
       notifyListeners();
     }else{
-      timer1 = box.get('time3') ?? '';
-      timer2 = box.get('time2') ?? '';
-      timer3 = box.get('time1') ?? '';
+      time1 = box.get('time3') ?? '';
+      time2 = box.get('time2') ?? '';
+      time3 = box.get('time1') ?? '';
       startTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('startTime').toString()));
       endTime = DateFormat('HH:mm').format(DateTime.parse(prefs.getString('endTime').toString()));
       previousDayDuration = prefs.getString('previousDayDuration').toString();
@@ -295,9 +296,9 @@ class MainProvider with ChangeNotifier {
       checkedTwo = false;
       checkedThree = false;
       Future.delayed(const Duration(milliseconds: 1000), () {
-        timer1 = box.get('time1') ?? '';
-        timer2 = box.get('time2') ?? '';
-        timer3 = box.get('time3') ?? '';
+        time1 = box.get('time1') ?? '';
+        time2 = box.get('time2') ?? '';
+        time3 = box.get('time3') ?? '';
       });
       notifyListeners();
     }else{
@@ -322,7 +323,45 @@ class MainProvider with ChangeNotifier {
       checkedThree = !checkedThree;
       await box.put('status3', checkedThree);
     }
-  notifyListeners();
+    notifyListeners();
+  }
+
+  Future<void> addNotification() async{
+    AwesomeNotifications().removeChannel('basic_channel');
+    AwesomeNotifications().setChannel(NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Scheduled Notifications',
+        channelDescription: 'Notification channel for basic tests'));
+    if(time1 != ''){
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: 'basic_channel',
+          title: '${Emojis.wheater_droplet} Just1 ${Emojis.wheater_droplet}',
+        ),
+          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time1)),
+      );
+    }
+    if(time2 != ''){
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 2,
+          channelKey: 'basic_channel',
+          title: '${Emojis.wheater_droplet} Just2 ${Emojis.wheater_droplet}',
+        ),
+          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time2))
+      );
+    }
+    if(time3 != ''){
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 3,
+          channelKey: 'basic_channel',
+          title: '${Emojis.wheater_droplet} Just3 ${Emojis.wheater_droplet}',
+        ),
+          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time3)),
+      );
+    }
   }
 
 }

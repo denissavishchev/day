@@ -1,4 +1,5 @@
 import 'package:day/main_provider.dart';
+import 'package:day/screens/plan_screen.dart';
 import 'package:day/screens/tasks_screen.dart';
 import 'package:day/widgets/button_widget.dart';
 import 'package:day/widgets/day_switch_widget.dart';
@@ -105,7 +106,15 @@ class MainScreen extends StatelessWidget {
                                         MaterialPageRoute(builder: (context) =>
                                         const NotesScreen()));
                                   },
-                                  icon: Icons.note_add,)
+                                  icon: Icons.note_add,),
+                                ButtonWidget(
+                                  onTap: () {
+                                    data.readNote();
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) =>
+                                        const PlanScreen()));
+                                  },
+                                  icon: Icons.play_arrow,)
                               ],
                             ),
                           ),

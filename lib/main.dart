@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'main_provider.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
 import 'screens/main_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +16,29 @@ Future main() async{
   await Hive.openBox<TasksModel>('tasks');
   await Hive.openBox<HistoryModel>('history');
   await Hive.openBox('plans');
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+  AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelKey: 'basic_channel',
+            channelGroupKey: 'basic_channel_group',
+            channelName: 'Scheduled Notifications',
+            importance: NotificationImportance.High,
+            channelShowBadge: true,
+            channelDescription: 'Notification channel for basic tests')
+      ],
+      channelGroups: [
+        NotificationChannelGroup(
+            channelGroupKey: 'basic_channel_group',
+            channelGroupName: 'Basic group')
+      ],
+      debug: false
+  );
   runApp(const MyApp());
 }
 

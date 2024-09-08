@@ -72,6 +72,7 @@ class PlanScreen extends StatelessWidget {
                               child: ButtonWidget(
                                 onTap: () {
                                   data.saveAlarms();
+                                  data.addNotification();
                                   Navigator.pushReplacement(context,
                                     MaterialPageRoute(builder: (context) =>
                                     const MainScreen()));
