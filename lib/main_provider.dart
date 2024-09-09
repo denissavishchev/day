@@ -177,19 +177,16 @@ class MainProvider with ChangeNotifier {
       await box.put('description1', description);
       await box.put('icon1', icon);
       await box.put('status1', false);
-      await box.put('deadline1', '');
     }else if(box.get('name2') == null){
       await box.put('name2', name);
       await box.put('description2', description);
       await box.put('icon2', icon);
       await box.put('status2', false);
-      await box.put('deadline2', '');
     }else if(box.get('name3') == null){
       await box.put('name3', name);
       await box.put('description3', description);
       await box.put('icon3', icon);
       await box.put('status3', false);
-      await box.put('deadline3', '');
     }
     notifyListeners();
   }
@@ -266,13 +263,13 @@ class MainProvider with ChangeNotifier {
     final history = HistoryModel()
       ..time = prefs.getString('startTime').toString()
       ..duration = dayDuration
-      ..name1 = box.get('name1')
+      ..name1 = box.get('name1') ?? ''
       ..description1 = box.get('description1')
       ..status1 = box.get('status3').toString()
-      ..name2 = box.get('name2')
+      ..name2 = box.get('name2') ?? ''
       ..description2 = box.get('description2')
       ..status2 = box.get('status2').toString()
-      ..name3 = box.get('name3')
+      ..name3 = box.get('name3') ?? ''
       ..description3 = box.get('description3')
       ..status3 = box.get('status1').toString();
     final historyBox = Boxes.addHistoryToBase();
@@ -327,40 +324,31 @@ class MainProvider with ChangeNotifier {
   }
 
   Future<void> addNotification() async{
-    AwesomeNotifications().removeChannel('basic_channel');
+    List<List<String>> n = [];
+    n.add([box.get('name1') ?? '', time1]);
+    n.add([box.get('name2') ?? '', time2]);
+    n.add([box.get('name3') ?? '', time3]);
+    AwesomeNotifications().removeChannel('scheduled');
     AwesomeNotifications().setChannel(NotificationChannel(
-        channelKey: 'basic_channel',
+        channelKey: 'scheduled',
         channelName: 'Scheduled Notifications',
         channelDescription: 'Notification channel for basic tests'));
-    if(time1 != ''){
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: 'basic_channel',
-          title: '${Emojis.wheater_droplet} Just1 ${Emojis.wheater_droplet}',
-        ),
-          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time1)),
-      );
-    }
-    if(time2 != ''){
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 2,
-          channelKey: 'basic_channel',
-          title: '${Emojis.wheater_droplet} Just2 ${Emojis.wheater_droplet}',
-        ),
-          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time2))
-      );
-    }
-    if(time3 != ''){
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 3,
-          channelKey: 'basic_channel',
-          title: '${Emojis.wheater_droplet} Just3 ${Emojis.wheater_droplet}',
-        ),
-          schedule: NotificationCalendar.fromDate(date: DateTime.parse(time3)),
-      );
+    for(int i = 0; i < n.length; i++){
+      if(n[i][1] != ''){
+        await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: DateTime.now().microsecondsSinceEpoch.remainder(200),
+            channelKey: 'scheduled',
+            title: '${Emojis.sun} Time for ${n[i][0]}',
+          ),
+          schedule: NotificationCalendar(
+              hour: int.parse(DateFormat('HH').format(DateTime.parse(n[i][1]))),
+              minute: int.parse(DateFormat('mm').format(DateTime.parse(n[i][1]))),
+              second: 0,
+              repeats: false
+          ),
+        );
+      }
     }
   }
 

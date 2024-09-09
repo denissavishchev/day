@@ -25,7 +25,7 @@ Future main() async{
       null,
       [
         NotificationChannel(
-            channelKey: 'basic_channel',
+            channelKey: 'scheduled',
             channelGroupKey: 'basic_channel_group',
             channelName: 'Scheduled Notifications',
             importance: NotificationImportance.High,
