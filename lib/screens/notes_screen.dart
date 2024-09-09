@@ -40,14 +40,16 @@ class NotesScreen extends StatelessWidget {
                           top: 40,
                           child: SizedBox(
                             width: size.width,
-                            height: size.height * 0.8,
+                            height: MediaQuery.viewInsetsOf(context).bottom == 0
+                                ? size.height * 0.68
+                                : size.height * 0.38,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 24, right: 12),
                               child: TextField(
                                 controller: data.notesTextController,
                                 cursorColor: kRed,
                                 keyboardType: TextInputType.multiline,
-                                maxLines: MediaQuery.viewInsetsOf(context).bottom != 0 ? 12 : 24,
+                                maxLines: null,
                                 style: const TextStyle(color: kRed, fontWeight: FontWeight.w500),
                                 decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
