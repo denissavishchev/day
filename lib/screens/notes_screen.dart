@@ -36,23 +36,30 @@ class NotesScreen extends StatelessWidget {
                           height: size.height * 0.8,
                           child: Image.asset('assets/images/blank.png', fit: BoxFit.fill,),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: TextField(
-                            controller: data.notesTextController,
-                            cursorColor: kRed,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 22,
-                            style: const TextStyle(color: kRed, fontWeight: FontWeight.w500),
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
+                        Positioned(
+                          top: 40,
+                          child: SizedBox(
+                            width: size.width,
+                            height: size.height * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 24, right: 12),
+                              child: TextField(
+                                controller: data.notesTextController,
+                                cursorColor: kRed,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: MediaQuery.viewInsetsOf(context).bottom != 0 ? 12 : 24,
+                                style: const TextStyle(color: kRed, fontWeight: FontWeight.w500),
+                                decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.transparent)
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.transparent)
+                                  ),
+                                ),
+                                onChanged: (value) => data.saveNote(value),
                               ),
                             ),
-                            onChanged: (value) => data.saveNote(value),
                           ),
                         )
                       ],
