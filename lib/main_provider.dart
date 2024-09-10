@@ -15,7 +15,10 @@ class MainProvider with ChangeNotifier {
 
   final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
-  final notesTextController = TextEditingController();
+  final notesTextControllerOne = TextEditingController();
+  final notesTextControllerTwo = TextEditingController();
+  final notesTextControllerThree = TextEditingController();
+  final pageController = PageController();
 
   bool day = true;
   bool checkedOne = false;
@@ -122,12 +125,25 @@ class MainProvider with ChangeNotifier {
     }
   }
 
-  Future saveNote(String note) async{
-    await box.put('note', note);
+  Future saveNote(String note, int index) async{
+    switch(index){
+      case 0:
+        await box.put('note', note);
+        break;
+      case 1:
+        await box.put('note1', note);
+        break;
+      case 2:
+        await box.put('note2', note);
+        break;
+    }
+    notifyListeners();
   }
 
   Future readNote() async{
-    notesTextController.text = await box.get('note') ?? '';
+    notesTextControllerOne.text = await box.get('note') ?? '';
+    notesTextControllerTwo.text = await box.get('note1') ?? '';
+    notesTextControllerThree.text = await box.get('note2') ?? '';
   }
 
   void showTime(context, int index) async{
