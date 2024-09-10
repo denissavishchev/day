@@ -41,7 +41,10 @@ class NotesScreen extends StatelessWidget {
                               SizedBox(
                                 width: size.width,
                                 height: size.height * 0.8,
-                                child: Image.asset('assets/images/blank.png', fit: BoxFit.fill,),
+                                child: Image.asset(
+                                  index == 0 ? 'assets/images/blank.png'
+                                  : index == 1 ? 'assets/images/blank1.png'
+                                  : 'assets/images/blank2.png', fit: BoxFit.fill,),
                               ),
                               Positioned(
                                 top: 40,
