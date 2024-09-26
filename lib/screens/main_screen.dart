@@ -1,5 +1,4 @@
 import 'package:day/main_provider.dart';
-import 'package:day/screens/recipe_screen.dart';
 import 'package:day/screens/tasks_screen.dart';
 import 'package:day/widgets/button_widget.dart';
 import 'package:day/widgets/day_switch_widget.dart';
@@ -86,13 +85,6 @@ class MainScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ButtonWidget(
-                                  onTap: () => Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (context) =>
-                                      const RecipeScreen())),
-                                  icon: Icons.set_meal_outlined,
-                                ),
-                                const SizedBox(width: 32,),
                                 ButtonWidget(
                                   onTap: () => Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) =>

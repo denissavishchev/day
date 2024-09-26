@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
 import 'models/history_model.dart';
-import 'models/recipe_model.dart';
 import 'models/tasks_model.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -230,21 +229,6 @@ class MainProvider with ChangeNotifier {
       box.add(tasks);
       nameTextController.clear();
       descriptionTextController.clear();
-    notifyListeners();
-  }
-
-  Future addRecipeBase() async {
-    final recipes = RecipeModel()
-      ..name = recipeNameTextController.text
-      ..description = recipeDescriptionTextController.text
-      ..image = ''
-      ..ingredients = 'Meat'
-      ..rating = '3'
-      ..time = DateTime.now().toString();
-    final box = Boxes.addRecipeToBase();
-    box.add(recipes);
-    recipeNameTextController.clear();
-    recipeDescriptionTextController.clear();
     notifyListeners();
   }
 
