@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 part 'history_model.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 12)
 class HistoryModel extends HiveObject{
   @HiveField(0)
   late String time;

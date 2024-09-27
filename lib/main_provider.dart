@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:day/constants.dart';
 import 'package:day/screens/plan_screen.dart';
+import 'package:day/widgets/button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
+import 'models/habits_model.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -14,6 +17,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 class MainProvider with ChangeNotifier {
 
   final nameTextController = TextEditingController();
+  final habitTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
   final recipeNameTextController = TextEditingController();
   final recipeDescriptionTextController = TextEditingController();
@@ -232,6 +236,17 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future addHabitToBase() async {
+    final habit = HabitsModel()
+      ..name = habitTextController.text
+      ..status = false
+      ..time = DateTime.now().toString();
+    final box = Boxes.addHabitToBase();
+    box.add(habit);
+    habitTextController.clear();
+    notifyListeners();
+  }
+
   String formatDuration(Duration duration) {
     String twoDigits(int n) {
       if (n >= 10) return "$n";
@@ -292,6 +307,16 @@ class MainProvider with ChangeNotifier {
       ..status3 = box.get('status1').toString();
     final historyBox = Boxes.addHistoryToBase();
     historyBox.add(history);
+    final habitBox = [];
+    for(var h in Hive.box<HabitsModel>('habits').values){
+      habitBox.add(h.name);
+    }
+    for(var i = 0; i < habitBox.length; i++){
+      Hive.box<HabitsModel>('habits').putAt(i, HabitsModel()
+        ..name = habitBox[i]
+        ..status = false
+        ..time = DateTime.now().toString());
+    }
     notifyListeners();
   }
 
@@ -341,6 +366,14 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void switchHabit(Box<HabitsModel> box, int index, List<HabitsModel> habits)async{
+    box.putAt(index, HabitsModel()
+    ..name = habits[index].name
+    ..status = !habits[index].status
+    ..time = DateTime.now().toString());
+    notifyListeners();
+  }
+
   Future<void> addNotification() async{
     List<List<String>> n = [];
     n.add([box.get('name1') ?? '', time1]);
@@ -368,6 +401,47 @@ class MainProvider with ChangeNotifier {
         );
       }
     }
+  }
+
+  Future<void>showToAddHabit(context)async {
+    Size size = MediaQuery.sizeOf(context);
+    return showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (context) {
+          return Container(
+              height: size.height * 0.2,
+              width: size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              margin: const EdgeInsets.only(bottom: 400),
+              decoration: const BoxDecoration(
+                color: kBlue,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextField(
+                    controller: habitTextController,
+                    style: const TextStyle(color: kWhite),
+                    decoration: textFieldDecoration,
+                  ),
+                  ButtonWidget(
+                    onTap: () {
+                      addHabitToBase();
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icons.add,
+                  ),
+                ],
+              )
+          );
+        });
+  }
+
+  Future<void> deleteHabit(Box<HabitsModel> box, int index)async{
+    box.deleteAt(index);
   }
 
 }

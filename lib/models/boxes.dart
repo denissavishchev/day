@@ -1,10 +1,13 @@
 import 'package:day/models/tasks_model.dart';
 import 'package:hive/hive.dart';
+import 'habits_model.dart';
 import 'history_model.dart';
 
 class Boxes {
   static Box<TasksModel> addTaskToBase() =>
       Hive.box<TasksModel>('tasks');
   static Box<HistoryModel> addHistoryToBase() =>
-      Hive.box<HistoryModel>('history');
+      Hive.box<HistoryModel>('stories');
+  static Box<HabitsModel> addHabitToBase() =>
+      Hive.box<HabitsModel>('habits');
 }
