@@ -7,6 +7,7 @@ import 'package:day/widgets/task_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
+import 'future_screen.dart';
 import 'history_screen.dart';
 import 'notes_screen.dart';
 
@@ -55,7 +56,7 @@ class MainScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: size.height * 0.66 + 90 ,
+                      top: size.height * 0.66 + 90,
                       child: Stack(
                         children: [
                           Container(
@@ -92,13 +93,13 @@ class MainScreen extends StatelessWidget {
                                       const TasksScreen())),
                                   icon: Icons.playlist_add_check_outlined,
                                 ),
-                                const SizedBox(width: 32,),
+                                const SizedBox(width: 12,),
                                 ButtonWidget(
                                   onTap: () => Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) =>
                                       const HistoryScreen())),
                                   icon: Icons.history,),
-                                const SizedBox(width: 32,),
+                                const SizedBox(width: 12,),
                                 ButtonWidget(
                                   onTap: () {
                                     data.readNote();
@@ -107,7 +108,7 @@ class MainScreen extends StatelessWidget {
                                         const NotesScreen()));
                                   },
                                   icon: Icons.note_add,),
-                                const SizedBox(width: 32,),
+                                const SizedBox(width: 12,),
                                 ButtonWidget(
                                   onTap: () {
                                     data.readNote();
@@ -116,6 +117,15 @@ class MainScreen extends StatelessWidget {
                                         const HabitsScreen()));
                                   },
                                   icon: Icons.app_registration,),
+                                const SizedBox(width: 12,),
+                                ButtonWidget(
+                                  onTap: () {
+                                    data.readNote();
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) =>
+                                        const FutureScreen()));
+                                  },
+                                  icon: Icons.diversity_2,),
                               ],
                             ),
                           ),

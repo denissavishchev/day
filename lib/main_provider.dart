@@ -24,7 +24,8 @@ class MainProvider with ChangeNotifier {
   final notesTextControllerOne = TextEditingController();
   final notesTextControllerTwo = TextEditingController();
   final notesTextControllerThree = TextEditingController();
-  final pageController = PageController();
+  final notesPageController = PageController();
+  final futurePageController = PageController();
 
   bool day = true;
   bool checkedOne = false;
@@ -36,6 +37,8 @@ class MainProvider with ChangeNotifier {
   String endTime = '';
   String previousDayDuration = '';
   String icon = 'drums';
+  List<Color> futureColors = [kTangerine, kLime, kGold];
+  Color futureColor = kTangerine;
 
   String time1 = '';
   String time2 = '';
@@ -75,6 +78,11 @@ class MainProvider with ChangeNotifier {
     'tree',
     'car',
   ];
+
+  void changeColor(int index){
+    futureColor = futureColors[index];
+    notifyListeners();
+  }
 
   void deleteAlarm(int index){
     switch(index){

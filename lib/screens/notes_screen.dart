@@ -32,7 +32,7 @@ class NotesScreen extends StatelessWidget {
                       width: size.width,
                       height: size.height * 0.8,
                       child: PageView.builder(
-                        controller: data.pageController,
+                        controller: data.notesPageController,
                         itemCount: 3,
                           itemBuilder: (context, index){
                           return Stack(
