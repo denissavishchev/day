@@ -6,10 +6,16 @@ class ButtonWidget extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.icon,
+    this.colorOne = kGrey,
+    this.colorTwo = kBlue,
+    this.iconColor = kBlue,
   });
 
-  final VoidCallback onTap;
   final IconData icon;
+  final Color colorOne;
+  final Color colorTwo;
+  final Color iconColor;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +37,10 @@ class ButtonWidget extends StatelessWidget {
                   offset: const Offset(0, 2)
               )
             ],
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
                 colors: [
-                  kGrey,
-                  kBlue
+                  colorOne,
+                  colorTwo
                 ],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft
@@ -42,7 +48,7 @@ class ButtonWidget extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(14))
         ),
         child: Center(
-          child: Icon(icon, color: kBlue, size: 32,),
+          child: Icon(icon, color: iconColor, size: 32,),
         ),
       ),
     );

@@ -79,6 +79,24 @@ class MainProvider with ChangeNotifier {
     'car',
   ];
 
+  List<int> fu = [0,0,0,0,0,0,0,0,0,0];
+
+  void switchFutureButton(int index){
+    if(fu[index] == 0){
+      fu[index] = 1;
+      notifyListeners();
+      return;
+    }if(fu[index] == 1){
+      fu[index] = 2;
+      notifyListeners();
+      return;
+    }if(fu[index] == 2){
+      fu[index] = 0;
+      notifyListeners();
+      return;
+    }
+  }
+
   void changeColor(int index){
     futureColor = futureColors[index];
     notifyListeners();
