@@ -24,6 +24,8 @@ class MainProvider with ChangeNotifier {
   final notesTextControllerOne = TextEditingController();
   final notesTextControllerTwo = TextEditingController();
   final notesTextControllerThree = TextEditingController();
+  final futureNameTextController = TextEditingController();
+  final futureDescriptionTextController = TextEditingController();
   final notesPageController = PageController();
   final futurePageController = PageController();
 
@@ -37,8 +39,9 @@ class MainProvider with ChangeNotifier {
   String endTime = '';
   String previousDayDuration = '';
   String icon = 'drums';
-  List<Color> futureColors = [kTangerine, kLime, kGold];
-  Color futureColor = kTangerine;
+  String selectedDate = '';
+  bool daniel = false;
+  bool leonard = false;
 
   String time1 = '';
   String time2 = '';
@@ -97,8 +100,38 @@ class MainProvider with ChangeNotifier {
     }
   }
 
-  void changeColor(int index){
-    futureColor = futureColors[index];
+  switchName(String name){
+    switch(name){
+      case 'daniel':
+        daniel = !daniel;
+        notifyListeners();
+        return;
+      case 'leonard':
+        leonard = !leonard;
+        notifyListeners();
+        return;
+    }
+
+  }
+
+  void cleanDate(){
+    selectedDate = '';
+    notifyListeners();
+  }
+
+  Future showCalendar(context) async{
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      locale: const Locale('en', 'GB'),
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 10),
+    );
+    if(picked == null){
+      selectedDate = DateTime.now().toString();
+    }else{
+      selectedDate = picked.toString();
+    }
     notifyListeners();
   }
 
