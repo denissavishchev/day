@@ -65,7 +65,7 @@ class CreateFutureScreen extends StatelessWidget {
                                         colorTwo: kBlack,
                                         iconColor: kTangerine,
                                         icon: Icons.add,
-                                        onTap: () {},
+                                        onTap: () => data.addFutureBase(),
                                       ),
                                     ],
                                   ),

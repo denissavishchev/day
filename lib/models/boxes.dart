@@ -1,5 +1,6 @@
 import 'package:day/models/tasks_model.dart';
 import 'package:hive/hive.dart';
+import 'future_model.dart';
 import 'habits_model.dart';
 import 'history_model.dart';
 
@@ -10,4 +11,6 @@ class Boxes {
       Hive.box<HistoryModel>('stories');
   static Box<HabitsModel> addHabitToBase() =>
       Hive.box<HabitsModel>('habits');
+  static Box<FutureModel> addFutureToBase() =>
+      Hive.box<FutureModel>('futures');
 }

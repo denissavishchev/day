@@ -9,6 +9,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
+import 'models/future_model.dart';
 import 'models/habits_model.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
@@ -82,22 +83,20 @@ class MainProvider with ChangeNotifier {
     'car',
   ];
 
-  List<int> fu = [0,0,0,0,0,0,0,0,0,0];
-
-  void switchFutureButton(int index){
-    if(fu[index] == 0){
-      fu[index] = 1;
+  void switchFutureButton(Box<FutureModel> box, int index, List<FutureModel> futures){
+      box.putAt(index, FutureModel()
+        ..name = futures[index].name
+        ..description = futures[index].description
+        ..deadline = futures[index].deadline
+        ..status = futures[index].status == 'start'
+            ? 'progress'
+            : futures[index].status == 'progress'
+            ? 'done'
+            : 'start'
+        ..daniel = futures[index].daniel
+        ..leonard = futures[index].leonard
+        ..time = DateTime.now().toString());
       notifyListeners();
-      return;
-    }if(fu[index] == 1){
-      fu[index] = 2;
-      notifyListeners();
-      return;
-    }if(fu[index] == 2){
-      fu[index] = 0;
-      notifyListeners();
-      return;
-    }
   }
 
   switchName(String name){
@@ -279,6 +278,25 @@ class MainProvider with ChangeNotifier {
     box.delete('status$index');
     box.delete('icon$index');
     box.delete('deadline$index');
+    notifyListeners();
+  }
+
+  Future addFutureBase() async {
+    final futures = FutureModel()
+      ..name = futureNameTextController.text
+      ..description = futureDescriptionTextController.text
+      ..deadline = selectedDate
+      ..status = 'start'
+      ..daniel = daniel
+      ..leonard = leonard
+      ..time = DateTime.now().toString();
+    final box = Boxes.addFutureToBase();
+    box.add(futures);
+    futureNameTextController.clear();
+    futureDescriptionTextController.clear();
+    selectedDate = '';
+    daniel = false;
+    leonard = false;
     notifyListeners();
   }
 
