@@ -1,5 +1,4 @@
 import 'package:day/main_provider.dart';
-import 'package:day/screens/future_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -56,16 +55,16 @@ class CreateFutureScreen extends StatelessWidget {
                                         colorTwo: kBlack,
                                         iconColor: kTangerine,
                                         icon: Icons.home,
-                                        onTap: () => Navigator.pushReplacement(context,
-                                            MaterialPageRoute(builder: (context) =>
-                                            const FutureScreen())),
+                                        onTap: () => data.toFutureScreen(context),
                                       ),
                                       ButtonWidget(
                                         colorOne: kBlue,
                                         colorTwo: kBlack,
                                         iconColor: kTangerine,
-                                        icon: Icons.add,
-                                        onTap: () => data.addFutureBase(),
+                                        icon: data.isFutureEdit ? Icons.edit : Icons.add,
+                                        onTap: () => data.isFutureEdit
+                                            ? data.editFuture(context)
+                                            : data.addFutureBase(context),
                                       ),
                                     ],
                                   ),
@@ -136,6 +135,14 @@ class CreateFutureScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                  const Spacer(),
+                                  Visibility(
+                                    visible: data.isFutureEdit,
+                                    child: IconButton(
+                                        onPressed: () => data.deleteFuture(context),
+                                        icon: const Icon(Icons.delete, color: kTangerine,)),
+                                  ),
+                                  const SizedBox(height: 24,),
                                 ],
                               ),
                             ),

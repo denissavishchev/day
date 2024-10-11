@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:day/constants.dart';
+import 'package:day/screens/create_future_screen.dart';
+import 'package:day/screens/future_screen.dart';
 import 'package:day/screens/plan_screen.dart';
 import 'package:day/widgets/button_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,12 +45,15 @@ class MainProvider with ChangeNotifier {
   String selectedDate = '';
   bool daniel = false;
   bool leonard = false;
+  bool isFutureEdit = false;
+  int editIndex = 0;
 
   String time1 = '';
   String time2 = '';
   String time3 = '';
 
   Box box = Hive.box('plans');
+  late Box futureBox;
 
   List<String> icons = [
     'drums',
@@ -281,7 +286,7 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future addFutureBase() async {
+  Future addFutureBase(context) async {
     final futures = FutureModel()
       ..name = futureNameTextController.text
       ..description = futureDescriptionTextController.text
@@ -298,6 +303,25 @@ class MainProvider with ChangeNotifier {
     daniel = false;
     leonard = false;
     notifyListeners();
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const FutureScreen()));
+  }
+
+  Future editFuture(context) async{
+    futureBox.putAt(editIndex, FutureModel()
+      ..name = futureNameTextController.text
+      ..description = futureDescriptionTextController.text
+      ..deadline = selectedDate
+      ..status = 'start'
+      ..daniel = daniel
+      ..leonard = leonard
+      ..time = DateTime.now().toString()
+    );
+    toFutureScreen(context);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const FutureScreen()));
   }
 
   Future addTaskBase() async {
@@ -380,7 +404,7 @@ class MainProvider with ChangeNotifier {
       ..description2 = box.get('description2')
       ..status2 = box.get('status2').toString()
       ..name3 = box.get('name3') ?? ''
-      ..description3 = box.get('description3')
+      ..description3 = box.get('description3') ?? ''
       ..status3 = box.get('status1').toString();
     final historyBox = Boxes.addHistoryToBase();
     historyBox.add(history);
@@ -517,8 +541,109 @@ class MainProvider with ChangeNotifier {
         });
   }
 
+  Future<void>showFutureDescription(context, List<FutureModel> futures, int index)async {
+    Size size = MediaQuery.sizeOf(context);
+    return showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (context) {
+          return GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+                height: size.height * 0.4,
+                width: size.width,
+                margin: const EdgeInsets.only(bottom: 250),
+                child: Stack(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: size.width * 0.4,
+                          decoration: const BoxDecoration(
+                            color: kTangerine,
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(8)),
+                          ),
+                        ),
+                        Container(
+                          width: size.width * 0.6,
+                          decoration: const BoxDecoration(
+                            color: kBlack,
+                            borderRadius: BorderRadius.horizontal(right: Radius.circular(8)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: size.width,
+                            height: size.height * 0.35,
+                            margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(4)),
+                              border: Border.all(width: 4, color: kBlack)
+                            ),
+                            child: Text(futures[index].description, style: kTextStyle,)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(futures[index].deadline.toString() != ''
+                                ? DateFormat('dd.MM.yyyy').format(DateTime.parse(futures[index].deadline))
+                                : '',
+                                style: kTextStyle,),
+                              Text(DateFormat('dd.MM.yyyy').format(DateTime.parse(futures[index].time)),
+                                style: kTextStyle.copyWith(color: kWhite.withOpacity(0.1)),),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+            ),
+          );
+        });
+  }
+
   Future<void> deleteHabit(Box<HabitsModel> box, int index)async{
     box.deleteAt(index);
+  }
+
+  void editFutureShow(context, List<FutureModel> futures, int index, Box<FutureModel> box){
+    futureBox = box;
+    editIndex = index;
+    isFutureEdit = true;
+    futureNameTextController.text = futures[index].name;
+    futureDescriptionTextController.text = futures[index].description;
+    selectedDate = futures[index].deadline;
+    daniel = futures[index].daniel;
+    leonard = futures[index].leonard;
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const CreateFutureScreen()));
+  }
+
+  void toFutureScreen(context){
+    futureNameTextController.clear();
+    futureDescriptionTextController.clear();
+    selectedDate = '';
+    daniel = false;
+    leonard = false;
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const FutureScreen()));
+  }
+
+  void deleteFuture(context){
+    futureBox.deleteAt(editIndex);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const FutureScreen()));
   }
 
 }
