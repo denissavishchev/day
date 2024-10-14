@@ -24,6 +24,7 @@ class HorizontalSwitchButtonWidget extends StatelessWidget {
             onTap: onTap,
             child: Container(
               width: 80,
+              height: 32,
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               decoration: BoxDecoration(

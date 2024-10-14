@@ -47,6 +47,7 @@ class MainProvider with ChangeNotifier {
   bool leonard = false;
   bool isFutureEdit = false;
   int editIndex = 0;
+  double habitDaySlider = 10;
 
   String time1 = '';
   String time2 = '';
@@ -425,7 +426,7 @@ class MainProvider with ChangeNotifier {
     final habit = HabitsModel()
       ..name = habitTextController.text
       ..status = false
-      ..days = 30
+      ..days = habitDaySlider.toInt()
       ..progress = ''
       ..start = DateTime.now().toString();
     final box = Boxes.addHabitToBase();
@@ -527,34 +528,63 @@ class MainProvider with ChangeNotifier {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (context) {
-          return Container(
-              height: size.height * 0.2,
-              width: size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              margin: const EdgeInsets.only(bottom: 400),
-              decoration: const BoxDecoration(
-                color: kBlue,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextField(
-                    controller: habitTextController,
-                    style: const TextStyle(color: kWhite),
-                    decoration: textFieldDecoration,
-                  ),
-                  ButtonWidget(
-                    onTap: () {
-                      addHabitToBase();
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icons.add,
-                  ),
-                ],
-              )
+          return StatefulBuilder(
+              builder: (context, setState){
+                return Container(
+                    height: size.height * 0.3,
+                    width: size.width,
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    margin: const EdgeInsets.only(bottom: 300),
+                    decoration: const BoxDecoration(
+                      color: kBlue,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextField(
+                          controller: habitTextController,
+                          style: const TextStyle(color: kWhite),
+                          decoration: textFieldDecoration,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Slider(
+                                divisions: 17,
+                                activeColor: kWhite,
+                                inactiveColor: kBlue,
+                                secondaryActiveColor: kRed,
+                                thumbColor: kTangerine,
+                                value: habitDaySlider,
+                                onChanged: (v) => setState((){
+                                  changeHabitDaySlider(v);
+                                }),
+                                min: 10,
+                                max: 180,
+                              ),
+                            ),
+                            Text(habitDaySlider.toStringAsFixed(0), style: kTextStyle,)
+                          ],
+                        ),
+                        ButtonWidget(
+                          onTap: () {
+                            addHabitToBase();
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icons.add,
+                        ),
+                      ],
+                    )
+                );
+              }
           );
         });
+  }
+
+  void changeHabitDaySlider(double v){
+    habitDaySlider = v;
+    notifyListeners();
   }
 
   Future<void>showFutureDescription(context, List<FutureModel> futures, int index)async {
