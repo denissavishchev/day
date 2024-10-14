@@ -337,17 +337,6 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future addHabitToBase() async {
-    final habit = HabitsModel()
-      ..name = habitTextController.text
-      ..status = false
-      ..time = DateTime.now().toString();
-    final box = Boxes.addHabitToBase();
-    box.add(habit);
-    habitTextController.clear();
-    notifyListeners();
-  }
-
   String formatDuration(Duration duration) {
     String twoDigits(int n) {
       if (n >= 10) return "$n";
@@ -408,16 +397,51 @@ class MainProvider with ChangeNotifier {
       ..status3 = box.get('status1').toString();
     final historyBox = Boxes.addHistoryToBase();
     historyBox.add(history);
-    final habitBox = [];
-    for(var h in Hive.box<HabitsModel>('habits').values){
-      habitBox.add(h.name);
+    final nameHabitBox = [];
+    final startHabitBox = [];
+    final daysHabitBox = [];
+    final progressHabitBox = [];
+    final statusHabitBox = [];
+    for(var h in Hive.box<HabitsModel>('habit').values){
+      nameHabitBox.add(h.name);
+      startHabitBox.add(h.start);
+      daysHabitBox.add(h.days);
+      progressHabitBox.add(h.progress);
+      statusHabitBox.add(h.status);
     }
-    for(var i = 0; i < habitBox.length; i++){
-      Hive.box<HabitsModel>('habits').putAt(i, HabitsModel()
-        ..name = habitBox[i]
+    for(var i = 0; i < nameHabitBox.length; i++){
+      Hive.box<HabitsModel>('habit').putAt(i, HabitsModel()
+        ..name = nameHabitBox[i]
         ..status = false
-        ..time = DateTime.now().toString());
+        ..start = startHabitBox[i]
+        ..days = daysHabitBox[i]
+        ..progress = progressHabitBox[i] + (statusHabitBox[i] ? '1' : '0')
+      );
     }
+    notifyListeners();
+  }
+
+  Future addHabitToBase() async {
+    final habit = HabitsModel()
+      ..name = habitTextController.text
+      ..status = false
+      ..days = 30
+      ..progress = ''
+      ..start = DateTime.now().toString();
+    final box = Boxes.addHabitToBase();
+    box.add(habit);
+    habitTextController.clear();
+    notifyListeners();
+  }
+
+  void switchHabit(Box<HabitsModel> box, int index, List<HabitsModel> habits)async{
+    box.putAt(index, HabitsModel()
+      ..name = habits[index].name
+      ..status = !habits[index].status
+      ..days = habits[index].days
+      ..progress = habits[index].progress
+      ..start = habits[index].start
+    );
     notifyListeners();
   }
 
@@ -464,14 +488,6 @@ class MainProvider with ChangeNotifier {
       checkedThree = !checkedThree;
       await box.put('status3', checkedThree);
     }
-    notifyListeners();
-  }
-
-  void switchHabit(Box<HabitsModel> box, int index, List<HabitsModel> habits)async{
-    box.putAt(index, HabitsModel()
-    ..name = habits[index].name
-    ..status = !habits[index].status
-    ..time = DateTime.now().toString());
     notifyListeners();
   }
 

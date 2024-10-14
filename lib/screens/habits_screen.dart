@@ -67,24 +67,7 @@ class HabitsScreen extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                 fontSize: 18
                                               ),),
-                                            Expanded(
-                                              child: AnimatedContainer(
-                                                duration: const Duration(milliseconds: 300),
-                                                margin: const EdgeInsets.symmetric(horizontal: 12),
-                                                height: 3,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(color: habits[index].status ? kRed : kBlue, width: 1),
-                                                  borderRadius: const BorderRadius.all(Radius.circular(2)),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: kWhite.withOpacity(0.1),
-                                                      blurRadius: 2,
-                                                      spreadRadius: 2
-                                                    )
-                                                  ]
-                                                ),
-                                              ),
-                                            ),
+                                            Text(habits[index].progress),
                                             HorizontalSwitchButtonWidget(
                                               onTap: () => data.switchHabit(box, index, habits),
                                               checked: habits[index].status,

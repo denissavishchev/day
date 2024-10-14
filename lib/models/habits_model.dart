@@ -8,5 +8,9 @@ class HabitsModel extends HiveObject{
   @HiveField(1)
   late bool status;
   @HiveField(2)
-  late String time;
+  late String start;
+  @HiveField(3)
+  late int days;
+  @HiveField(4)
+  late String progress;
 }

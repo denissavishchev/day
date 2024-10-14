@@ -10,7 +10,7 @@ class Boxes {
   static Box<HistoryModel> addHistoryToBase() =>
       Hive.box<HistoryModel>('stories');
   static Box<HabitsModel> addHabitToBase() =>
-      Hive.box<HabitsModel>('habits');
+      Hive.box<HabitsModel>('habit');
   static Box<FutureModel> addFutureToBase() =>
       Hive.box<FutureModel>('futures');
 }

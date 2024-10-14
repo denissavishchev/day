@@ -19,7 +19,7 @@ Future main() async{
   Hive.registerAdapter(FutureModelAdapter());
   await Hive.openBox<TasksModel>('tasks');
   await Hive.openBox<HistoryModel>('stories');
-  await Hive.openBox<HabitsModel>('habits');
+  await Hive.openBox<HabitsModel>('habit');
   await Hive.openBox<FutureModel>('futures');
   await Hive.openBox('plans');
   await Permission.notification.isDenied.then((value) {

@@ -8,7 +8,7 @@ part of 'habits_model.dart';
 
 class HabitsModelAdapter extends TypeAdapter<HabitsModel> {
   @override
-  final int typeId = 6;
+  final int typeId = 15;
 
   @override
   HabitsModel read(BinaryReader reader) {
@@ -19,19 +19,25 @@ class HabitsModelAdapter extends TypeAdapter<HabitsModel> {
     return HabitsModel()
       ..name = fields[0] as String
       ..status = fields[1] as bool
-      ..time = fields[2] as String;
+      ..start = fields[2] as String
+      ..days = fields[3] as int
+      ..progress = fields[4] as String;
   }
 
   @override
   void write(BinaryWriter writer, HabitsModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.status)
       ..writeByte(2)
-      ..write(obj.time);
+      ..write(obj.start)
+      ..writeByte(3)
+      ..write(obj.days)
+      ..writeByte(4)
+      ..write(obj.progress);
   }
 
   @override
