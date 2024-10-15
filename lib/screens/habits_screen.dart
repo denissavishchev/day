@@ -62,7 +62,10 @@ class HabitsScreen extends StatelessWidget {
                                         width: size.width,
                                         margin: const EdgeInsets.only(bottom: 4),
                                         padding: const EdgeInsets.fromLTRB(18, 6, 18, 12),
-                                        color: kNavy.withOpacity(0.3),
+                                        decoration: BoxDecoration(
+                                          color: kNavy.withOpacity(0.3),
+                                          borderRadius: const BorderRadius.all(Radius.circular(4))
+                                        ),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -105,13 +108,19 @@ class HabitsScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               children: [
-                                                HorizontalSwitchButtonWidget(
-                                                  onTap: () => data.switchHabit(box, index, habits),
-                                                  checked: habits[index].status,
-                                                  index: index,),
+                                                habits[index].days == habits[index].progress.length
+                                                    ? const Icon(Icons.history, color: kGreen, size: 32,)
+                                                    : HorizontalSwitchButtonWidget(
+                                                      onTap: () => data.switchHabit(box, index, habits),
+                                                      checked: habits[index].status,
+                                                      index: index,),
                                                 const SizedBox(height: 4),
-                                                Text(habits[index].days.toString()),
-                                                Text(habits[index].progress),
+                                                Row(
+                                                  children: [
+                                                    Text(habits[index].days.toString(), style: kTextStyle,),
+                                                    const Text(' days', style: kTextStyle,),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ],

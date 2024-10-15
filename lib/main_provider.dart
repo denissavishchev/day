@@ -416,7 +416,9 @@ class MainProvider with ChangeNotifier {
         ..status = false
         ..start = startHabitBox[i]
         ..days = daysHabitBox[i]
-        ..progress = progressHabitBox[i] + (statusHabitBox[i] ? '1' : '0')
+        ..progress = progressHabitBox[i].length == daysHabitBox[i]
+            ? progressHabitBox[i]
+            : progressHabitBox[i] + (statusHabitBox[i] ? '1' : '0')
       );
     }
     notifyListeners();
