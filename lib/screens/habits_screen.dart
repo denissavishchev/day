@@ -16,7 +16,7 @@ class HabitsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: kBlue,
+      backgroundColor: kIndigo,
       body: SafeArea(
         child: Consumer<MainProvider>(
             builder: (context, data, _){
@@ -28,12 +28,18 @@ class HabitsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ButtonWidget(
+                          colorOne: kIndigo,
+                          colorTwo: kNavy,
+                          iconColor: kGreen,
                           onTap: () => Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) =>
                               const MainScreen())),
                           icon: Icons.home,
                         ),
                         ButtonWidget(
+                          colorOne: kIndigo,
+                          colorTwo: kNavy,
+                          iconColor: kGreen,
                           onTap: () => data.showToAddHabit(context),
                           icon: Icons.add,
                         ),
@@ -55,8 +61,8 @@ class HabitsScreen extends StatelessWidget {
                                       child: Container(
                                         width: size.width,
                                         margin: const EdgeInsets.only(bottom: 4),
-                                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                                        color: kGrey.withOpacity(0.3),
+                                        padding: const EdgeInsets.fromLTRB(18, 6, 18, 12),
+                                        color: kNavy.withOpacity(0.3),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -68,6 +74,7 @@ class HabitsScreen extends StatelessWidget {
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 18
                                                   ),),
+                                                const SizedBox(height: 8,),
                                                 SizedBox(
                                                   width: 240,
                                                   child: Wrap(
@@ -83,10 +90,10 @@ class HabitsScreen extends StatelessWidget {
                                                         height: 12,
                                                         decoration: BoxDecoration(
                                                           color: converted[i] == 1
-                                                              ? kTangerine
+                                                              ? kGreen
                                                               : converted[i] == 0
-                                                              ? kLime.withOpacity(0.4)
-                                                              : kWhite.withOpacity(0.2),
+                                                              ? kNavy.withOpacity(0.2)
+                                                              : kIndigo.withOpacity(0.2),
                                                             borderRadius: const BorderRadius.all(Radius.circular(3)),
                                                             border: Border.all(width: 1, color: kBlack)
                                                         ),
@@ -97,12 +104,12 @@ class HabitsScreen extends StatelessWidget {
                                               ],
                                             ),
                                             Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 HorizontalSwitchButtonWidget(
                                                   onTap: () => data.switchHabit(box, index, habits),
                                                   checked: habits[index].status,
                                                   index: index,),
+                                                const SizedBox(height: 4),
                                                 Text(habits[index].days.toString()),
                                                 Text(habits[index].progress),
                                               ],

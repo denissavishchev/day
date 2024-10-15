@@ -28,7 +28,7 @@ class HorizontalSwitchButtonWidget extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               decoration: BoxDecoration(
-                border: Border.all(color: kBlue.withOpacity(0.7), width: 1),
+                border: Border.all(color: kIndigo.withOpacity(0.5), width: 1),
                 borderRadius: const BorderRadius.all(Radius.circular(14)),
                 boxShadow: [
                   BoxShadow(
@@ -50,11 +50,11 @@ class HorizontalSwitchButtonWidget extends StatelessWidget {
                   height: size.height * 0.08,
                   decoration: BoxDecoration(
                       border: Border.all(
-                          color: checked ? kRed : kBlue,
+                          color: checked ? kGreen : kBlue,
                           width: 1),
                       boxShadow: [
                         BoxShadow(
-                            color: checked ? kRed.withOpacity(0.3) : kBlack.withOpacity(0.2),
+                            color: checked ? kGreen.withOpacity(0.1) : kBlack.withOpacity(0.2),
                             spreadRadius: 2,
                             blurRadius: 2,
                             offset: const Offset(0, 2)
@@ -72,7 +72,7 @@ class HorizontalSwitchButtonWidget extends StatelessWidget {
                   ),
                   child: Center(
                     child: AnimatedCrossFade(
-                      firstChild: const Icon(Icons.circle, color: kRed, size: 18,),
+                      firstChild: const Icon(Icons.circle, color: kGreen, size: 18,),
                       secondChild: const Icon(Icons.circle, color: kBlue, size: 18,),
                       crossFadeState: checked ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                       duration: const Duration(milliseconds: 100),

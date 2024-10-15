@@ -534,9 +534,9 @@ class MainProvider with ChangeNotifier {
                     height: size.height * 0.3,
                     width: size.width,
                     padding: const EdgeInsets.symmetric(horizontal: 18),
-                    margin: const EdgeInsets.only(bottom: 300),
+                    margin: const EdgeInsets.only(bottom: 360),
                     decoration: const BoxDecoration(
-                      color: kBlue,
+                      color: kIndigo,
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                     child: Column(
@@ -552,10 +552,9 @@ class MainProvider with ChangeNotifier {
                             Expanded(
                               child: Slider(
                                 divisions: 17,
-                                activeColor: kWhite,
-                                inactiveColor: kBlue,
-                                secondaryActiveColor: kRed,
-                                thumbColor: kTangerine,
+                                activeColor: kGreen,
+                                inactiveColor: kWhite,
+                                thumbColor: kGreen,
                                 value: habitDaySlider,
                                 onChanged: (v) => setState((){
                                   changeHabitDaySlider(v);
@@ -568,6 +567,9 @@ class MainProvider with ChangeNotifier {
                           ],
                         ),
                         ButtonWidget(
+                          colorOne: kIndigo,
+                          colorTwo: kNavy,
+                          iconColor: kGreen,
                           onTap: () {
                             addHabitToBase();
                             Navigator.of(context).pop();
