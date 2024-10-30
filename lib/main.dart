@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'main_provider.dart';
 import 'models/future_model.dart';
+import 'models/habit_history_model.dart';
 import 'models/habits_model.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
@@ -17,10 +18,12 @@ Future main() async{
   Hive.registerAdapter(HistoryModelAdapter());
   Hive.registerAdapter(HabitsModelAdapter());
   Hive.registerAdapter(FutureModelAdapter());
+  Hive.registerAdapter(HabitHistoryModelAdapter());
   await Hive.openBox<TasksModel>('tasks');
   await Hive.openBox<HistoryModel>('stories');
   await Hive.openBox<HabitsModel>('habit');
   await Hive.openBox<FutureModel>('futures');
+  await Hive.openBox<HabitHistoryModel>('habitHistory');
   await Hive.openBox('plans');
   await Permission.notification.isDenied.then((value) {
     if (value) {

@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/boxes.dart';
 import 'models/future_model.dart';
+import 'models/habit_history_model.dart';
 import 'models/habits_model.dart';
 import 'models/history_model.dart';
 import 'models/tasks_model.dart';
@@ -48,6 +49,9 @@ class MainProvider with ChangeNotifier {
   bool isFutureEdit = false;
   int editIndex = 0;
   double habitDaySlider = 10;
+  int convertedLength = 0;
+  int zeros = 0;
+  int ones = 0;
 
   String time1 = '';
   String time2 = '';
@@ -424,6 +428,19 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future addHabitHistoryToBase(Box<HabitsModel> boxDelete, int index, List<HabitsModel> habits) async {
+    final habitHistory = HabitHistoryModel()
+      ..name = habits[index].name
+      ..startTime = habits[index].start
+      ..endTime = (DateTime.parse(habits[index].start).add(Duration(days: habits[index].days))).toString()
+      ..totalDays = habits[index].days.toString()
+      ..goodDays = habits[index].progress.split('').map(int.parse).toList().where((e) => e == 1).length.toString()
+      ..badDays = habits[index].progress.split('').map(int.parse).toList().where((e) => e == 0).length.toString();
+    final box = Boxes.addHabitHistoryToBase();
+    box.add(habitHistory);
+    deleteHabit(boxDelete, index);
+  }
+
   Future addHabitToBase() async {
     final habit = HabitsModel()
       ..name = habitTextController.text
@@ -661,6 +678,10 @@ class MainProvider with ChangeNotifier {
   }
 
   Future<void> deleteHabit(Box<HabitsModel> box, int index)async{
+    box.deleteAt(index);
+  }
+
+  Future<void> deleteHistoryHabit(Box<HabitHistoryModel> box, int index)async{
     box.deleteAt(index);
   }
 

@@ -1,4 +1,5 @@
 import 'package:day/main_provider.dart';
+import 'package:day/screens/habbit_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,15 @@ class HabitsScreen extends StatelessWidget {
                               MaterialPageRoute(builder: (context) =>
                               const MainScreen())),
                           icon: Icons.home,
+                        ),
+                        ButtonWidget(
+                          colorOne: kIndigo,
+                          colorTwo: kNavy,
+                          iconColor: kGreen,
+                          onTap: () => Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) =>
+                              const HabitHistoryScreen())),
+                          icon: Icons.history,
                         ),
                         ButtonWidget(
                           colorOne: kIndigo,
@@ -86,7 +96,10 @@ class HabitsScreen extends StatelessWidget {
                                                     children: List.generate(habits[index].days, (i){
                                                       List<int> converted = habits[index].progress.split('')
                                                       .map((v) => int.parse(v)).toList();
+                                                      data.convertedLength = habits[index].days - (habits[index].days - converted.length);
                                                       converted.addAll(List.filled(habits[index].days - converted.length, 3));
+                                                      data.zeros = converted.where((e) => e == 0).length;
+                                                      data.ones = converted.where((e) => e == 1).length;
                                                       return Container(
                                                         margin: const EdgeInsets.only(right: 4),
                                                         width: 12,
@@ -109,7 +122,9 @@ class HabitsScreen extends StatelessWidget {
                                             Column(
                                               children: [
                                                 habits[index].days == habits[index].progress.length
-                                                    ? const Icon(Icons.history, color: kGreen, size: 32,)
+                                                    ? GestureDetector(
+                                                        onTap: () => data.addHabitHistoryToBase(box, index, habits),
+                                                        child: const Icon(Icons.history, color: kGreen, size: 32,))
                                                     : HorizontalSwitchButtonWidget(
                                                       onTap: () => data.switchHabit(box, index, habits),
                                                       checked: habits[index].status,
@@ -117,6 +132,38 @@ class HabitsScreen extends StatelessWidget {
                                                 const SizedBox(height: 4),
                                                 Row(
                                                   children: [
+                                                    Container(
+                                                      margin: const EdgeInsets.only(right: 4),
+                                                      width: 12,
+                                                      height: 12,
+                                                      decoration: BoxDecoration(
+                                                          color: kGreen,
+                                                          borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                                          border: Border.all(width: 1, color: kBlack)
+                                                      ),
+                                                    ),
+                                                    const Text('- ', style: kTextStyle,),
+                                                    Text(data.ones.toString(), style: kTextStyle,),
+                                                    const Text(' / ', style: kTextStyle,),
+                                                    Container(
+                                                      margin: const EdgeInsets.only(right: 4),
+                                                      width: 12,
+                                                      height: 12,
+                                                      decoration: BoxDecoration(
+                                                          color: kNavy.withOpacity(0.2),
+                                                          borderRadius: const BorderRadius.all(Radius.circular(3)),
+                                                          border: Border.all(width: 1, color: kBlack)
+                                                      ),
+                                                    ),
+                                                    const Text('- ', style: kTextStyle,),
+                                                    Text(data.zeros.toString(), style: kTextStyle,),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Row(
+                                                  children: [
+                                                    Text(data.convertedLength.toString(), style: kTextStyle,),
+                                                    const Text(' / ', style: kTextStyle,),
                                                     Text(habits[index].days.toString(), style: kTextStyle,),
                                                     const Text(' days', style: kTextStyle,),
                                                   ],
